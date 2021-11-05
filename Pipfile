@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+ngdb = "*"
+
+[dev-packages]
+python-language-server = "*"
+pylint = "*"
+mypy = "*"
+vermin = "*"
+twine = "*"
+typing-extensions = "*"
+sphinx-rtd-theme = "*"
+sphinx = "*"
+coverage = "*"
+
+[requires]
+python_version = "3.8"
