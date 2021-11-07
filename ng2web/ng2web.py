@@ -3,6 +3,7 @@
 ##############################################################################
 # Python imports.
 import argparse
+from pathlib import Path
 
 ##############################################################################
 # Third party imports.
@@ -26,6 +27,7 @@ def get_args() -> argparse.Namespace:
 
     # Create the argument parser object.
     parser = argparse.ArgumentParser(
+        prog        = Path( __file__ ).stem,
         description = "Convert a Norton Guide database to HTML documents.",
         epilog      = version
     )
