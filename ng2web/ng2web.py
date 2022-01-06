@@ -7,7 +7,7 @@ from pathlib import Path
 
 ##############################################################################
 # Third party imports.
-from ngdb import __version__ as ngdb_ver
+from ngdb import __version__ as ngdb_ver, NortonGuide
 
 ##############################################################################
 # Local imports.
@@ -24,6 +24,18 @@ def log( msg: str ) -> None:
     now...
     """
     print( msg )
+
+##############################################################################
+# Prefix some text with a guide's "namespace".
+def prefix( text: str, guide: NortonGuide ) -> str:
+    """Prefix the given text with the guide's namespace.
+
+    :param str text: The text to prefix.
+    :param NortonGuide guide: The guide we're working with.
+    :returns: The prefixed text.
+    :rtype: str
+    """
+    return f"{guide.path.stem}-{text}"
 
 ##############################################################################
 # Parse the arguments.
@@ -66,13 +78,23 @@ def get_args() -> argparse.Namespace:
     return parser.parse_args()
 
 ##############################################################################
+# Convert a guide to HTML.
+def to_html( args: argparse.Namespace ) -> None:
+    """Convert a Norton Guide into HTML.
+
+    :param ~argparse.Namespace args: The command line arguments.
+    """
+
+    # Open the guide. Note that we turn it into a Path, and just to be kind
+    # to folk, we attempt to expand any sort of ~ inside it first.
+    with NortonGuide( Path( args.guide ).expanduser().resolve() ) as guide:
+        log( f"Guide: {guide.path}" )
+        log( f"Output prefix: {prefix( '', guide )}" )
+
+##############################################################################
 # Main entry point for the tool.
 def main() -> None:
     """Main entry point for the tool."""
-
-    # Get the arguments.
-    args = get_args()
-
-    print( f"I'd convert {args.guide} in {args.output}" )
+    to_html( get_args() )
 
 ### ng2web.py ends here
