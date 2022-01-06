@@ -32,6 +32,13 @@ def get_args() -> argparse.Namespace:
         epilog      = version
     )
 
+    # Add an optional output directory.
+    parser.add_argument(
+        "-o", "--output",
+        help    = "Directory where the output files will be created.",
+        default = "."
+    )
+
     # Add --version
     parser.add_argument(
         "-v", "--version",
@@ -54,6 +61,6 @@ def main() -> None:
     # Get the arguments.
     args = get_args()
 
-    print( f"I'd convert {args.guide} here" )
+    print( f"I'd convert {args.guide} in {args.output}" )
 
 ### ng2web.py ends here
