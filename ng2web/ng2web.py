@@ -14,6 +14,18 @@ from ngdb import __version__ as ngdb_ver
 from . import __version__
 
 ##############################################################################
+# Quick and dirty logger.
+def log( msg: str ) -> None:
+    """Simple logging function.
+
+    :param str msg: The message to log.
+
+    At some point soon I'll possibly switch to proper logging, but just for
+    now...
+    """
+    print( msg )
+
+##############################################################################
 # Parse the arguments.
 def get_args() -> argparse.Namespace:
     """Get the arguments passed by the user.
