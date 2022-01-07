@@ -4,6 +4,7 @@
 # Python imports.
 import argparse
 from pathlib import Path
+from typing  import Union
 
 ##############################################################################
 # Third party imports.
@@ -36,6 +37,22 @@ def prefix( text: str, guide: NortonGuide ) -> str:
     :rtype: str
     """
     return f"{guide.path.stem}-{text}"
+
+##############################################################################
+# Locate a file within the user-specified output location.
+def output( args: argparse.Namespace, file_name: Union[ Path, str ] ) -> Path:
+    """Expand a file's name so that it's within the output location.
+
+    :param ~argparse.Namespace args: The command line arguments.
+    :parag Union[~pathlib.Path,str] file_name: The file's name.
+    :returns: The full path to the file, within the output location.
+    :rtype: ~pathlib.Path
+
+
+    Note that this function will expand any user information within the
+    specified output path and also resolve the result.
+    """
+    return Path( args.output ).expanduser().resolve() / Path( file_name )
 
 ##############################################################################
 # Parse the arguments.
