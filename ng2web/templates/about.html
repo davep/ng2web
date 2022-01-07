@@ -1,19 +1,11 @@
 {# -*- engine: jinja2 -*- #}
 
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <meta name="generator" content="{{ generator }}">
-    <title>About: {{ guide.title }}</title>
-  </head>
+{% block title %}About: {{ guide.title }}{% endblock %}
 
-  <body>
-    TODO.
-  </body>
-
-</html>
+{% block content %}
+  TODO.
+{% endblock %}
 
 {# about.html ends here #}
