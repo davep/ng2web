@@ -95,6 +95,18 @@ def get_args() -> argparse.Namespace:
     return parser.parse_args()
 
 ##############################################################################
+# Generate the path to the about page.
+def about( guide: NortonGuide, args: argparse.Namespace ) -> Path:
+    """Get the name of the about page for the guide.
+
+    :param NortonGuide gide: The guide to generate the about name for.
+    :param ~argparse.Namespace args: The command line arguments.
+    :returns: The path to the about file for the guide.
+    :rtype: ~pathlib.Path
+    """
+    return output( args, prefix( "about.html", guide ) )
+
+##############################################################################
 # Convert a guide to HTML.
 def to_html( args: argparse.Namespace ) -> None:
     """Convert a Norton Guide into HTML.
@@ -107,6 +119,7 @@ def to_html( args: argparse.Namespace ) -> None:
     with NortonGuide( Path( args.guide ).expanduser().resolve() ) as guide:
         log( f"Guide: {guide.path}" )
         log( f"Output prefix: {prefix( '', guide )}" )
+        log( f"About page: {about( guide, args )}" )
 
 ##############################################################################
 # Main entry point for the tool.
