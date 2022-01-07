@@ -9,7 +9,10 @@ from typing  import Union
 ##############################################################################
 # Third party imports.
 from ngdb   import __version__ as ngdb_ver, NortonGuide
-from jinja2 import __version__ as jinja_version
+from jinja2 import (
+    __version__ as jinja_version,
+    Environment, PackageLoader, select_autoescape
+)
 
 ##############################################################################
 # Local imports.
@@ -108,6 +111,19 @@ def about( guide: NortonGuide, args: argparse.Namespace ) -> Path:
     return output( args, prefix( "about.html", guide ) )
 
 ##############################################################################
+# Write the about page for the guide.
+def write_about( guide: NortonGuide, args: argparse.Namespace, env: Environment ) -> None:
+    """Write the about page for the guide.
+
+    :param NortonGuide gide: The guide to generate the about name for.
+    :param ~argparse.Namespace args: The command line arguments.
+    :param Environment env: The template environment.
+    """
+    log( f"Writing about into {about( guide, args )}" )
+    with about( guide, args ).open( "w" ) as target:
+        target.write( env.get_template( "about.html" ).render() )
+
+##############################################################################
 # Convert a guide to HTML.
 def to_html( args: argparse.Namespace ) -> None:
     """Convert a Norton Guide into HTML.
@@ -118,9 +134,22 @@ def to_html( args: argparse.Namespace ) -> None:
     # Open the guide. Note that we turn it into a Path, and just to be kind
     # to folk, we attempt to expand any sort of ~ inside it first.
     with NortonGuide( Path( args.guide ).expanduser().resolve() ) as guide:
+
+        # Log some basics.
         log( f"Guide: {guide.path}" )
         log( f"Output prefix: {prefix( '', guide )}" )
-        log( f"About page: {about( guide, args )}" )
+
+        # Bootstrap the template stuff.
+        env = Environment(
+            loader     = PackageLoader( Path( __file__ ).stem ),
+            autoescape = select_autoescape(),
+        )
+
+        # Set up the global variables for template expansion.
+        env.globals = dict( generator=f"ng2web v{__version__}", guide=guide )
+
+        # Write the about page.
+        write_about( guide, args, env )
 
 ##############################################################################
 # Main entry point for the tool.
