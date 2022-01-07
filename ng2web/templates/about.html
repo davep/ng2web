@@ -8,9 +8,11 @@
 
   <h1>About {{ guide.title }}</h1>
   <hr />
-  {% for line in guide.credits %}
-    {{ line }}
-  {% endfor %}
+  <pre>
+    {% for line in guide.credits %}
+      {{ line }}
+    {% endfor %}
+  </pre>
 
 {% endblock %}
 
