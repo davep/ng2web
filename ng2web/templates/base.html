@@ -12,11 +12,24 @@
   </head>
 
   <body>
+
+    <header>
+      <nav class="box">
+        <ul>
+          {% with prompt="About", link=about_url %}{% include "inc/nav-link.html" %}{% endwith %}
+          {% with prompt="Previous", link=previous_url %}{% include "inc/nav-link.html" %}{% endwith %}
+          {% with prompt="Up", link=up_url %}{% include "inc/nav-link.html" %}{% endwith %}
+          {% with prompt="Next", link=next_url %}{% include "inc/nav-link.html" %}{% endwith %}
+        </ul>
+      </nav>
+    </header>
+
     <section>
       <article class="box">
         {% block content %}{% endblock %}
       </article>
     </section>
+
   </body>
 
 </html>

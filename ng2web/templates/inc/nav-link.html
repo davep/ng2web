@@ -1,0 +1,11 @@
+{# -*- engine: jinja2 -*- #}
+
+<li>
+  {% if link %}
+    <a href="{{ link }}">{{ prompt }}</a>
+  {% else %}
+    <span>{{ prompt }}</span>
+  {% endif %}
+</li>
+
+{# nav-link.html ends here #}
