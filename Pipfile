@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 ngdb = "*"
+jinja2 = "*"
 
 [dev-packages]
 python-language-server = "*"

@@ -8,7 +8,8 @@ from typing  import Union
 
 ##############################################################################
 # Third party imports.
-from ngdb import __version__ as ngdb_ver, NortonGuide
+from ngdb   import __version__ as ngdb_ver, NortonGuide
+from jinja2 import __version__ as jinja_version
 
 ##############################################################################
 # Local imports.
@@ -64,7 +65,7 @@ def get_args() -> argparse.Namespace:
     """
 
     # Version information, used in a couple of paces.
-    version = f"v{__version__} (ngdb v{ngdb_ver})"
+    version = f"v{__version__} (ngdb v{ngdb_ver}; Jinja2 v{jinja_version})"
 
     # Create the argument parser object.
     parser = argparse.ArgumentParser(
