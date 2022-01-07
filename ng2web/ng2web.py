@@ -195,6 +195,13 @@ def to_html( args: argparse.Namespace ) -> None:
             stylesheet = css( guide, args ).name
         )
 
+        # Set up the filters for the guide templates.
+        env.filters = dict(
+            prompt = lambda option: option[ 0 ],
+            offset = lambda option: option[ 1 ],
+            urlify = lambda option: entry( guide, args, option[ 1 ] ).name
+        )
+
         # Write the stylesheet.
         write_css( guide, args, env )
 
