@@ -1,0 +1,205 @@
+body {
+    font-family: sans-serif;
+    background: dimgray;
+}
+
+
+footer {
+  clear: both;
+  font-size: 70%;
+  color: silver;
+  padding: 1ex;
+}
+
+.box {
+  border: solid 1px silver;
+  box-shadow: 4px 4px 7px 0px rgba( 0, 0, 0, 0.2 );
+  background: navy;
+  color: silver;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+nav a:hover, nav a:hover *, article a:hover, article a:hover * {
+  background: red;
+  color: white;
+}
+
+header nav {
+  padding: 0;
+  margin-bottom: 1ex;
+}
+
+header nav ul {
+  padding-left: 1ex;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+header nav ul li {
+  display: inline-block;
+  color: dimgray;
+}
+
+header nav ul li::after {
+  content: " |";
+  color: silver;
+}
+
+header nav a {
+  color: white;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+header nav span {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+section nav.menu {
+  float: left;
+  padding-right: 1ex;
+  margin-right: 1ex;
+  margin-bottom: 1ex;
+}
+
+section nav.menu ul {
+  list-style: none;
+  padding-left: 1ex;
+}
+
+section nav.menu > ul > li {
+  color: white;
+}
+
+section nav.menu > ul > li > ul > li {
+  color: silver;
+}
+
+section nav.menu a {
+  display: block;
+}
+
+nav.seeAlso {
+  border-top: solid 1px silver;
+  white-space: normal;
+  margin-top: 1ex;
+}
+
+nav.seeAlso ul {
+  padding: 0;
+  padding-left: 0.5em;
+  margin: 0;
+  margin-top: 0.5em;
+}
+
+nav.seeAlso ul li:first-child {
+  color: white;
+}
+
+nav.seeAlso ul li {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+section article {
+  overflow: scroll;
+  font-family: 'Roboto Mono', monospace;
+  padding: 0.5em;
+  margin-bottom: 1ex;
+}
+
+section article pre {
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+section article h1 {
+  color: white;
+  margin-bottom: 0;
+}
+
+section article ul {
+  list-style: none;
+  padding-left: 1ex;
+  white-space: normal;
+}
+
+section article span.ngb {
+  color: white;
+}
+
+section article span.ngu {
+  color: fuchsia;
+}
+
+section article a {
+  width: 100%;
+  display: inline-block;
+}
+
+@media screen and (max-width: 480px) {
+
+  .box {
+    box-shadow: none;
+  }
+
+  section nav.menu {
+    float: none;
+    margin: 0;
+  }
+
+  section article {
+    clear: both;
+  }
+
+  header nav {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+
+  header nav ul, header nav ul a, header nav ul span {
+    padding: 0;
+  }
+
+  header nav ul li {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    display: inline;
+  }
+
+  header nav ul li::after {
+    content: "";
+  }
+
+  header nav ul li:nth-child(2):after {
+    content: "\\A";
+    white-space: pre;
+  }
+
+  section nav.menu li {
+    display: inline-block;
+  }
+
+  section nav.menu a {
+    display: inline-block;
+    font-size: 80%;
+  }
+
+  section nav.menu ul ul li::after {
+    content: " |";
+    color: white;
+  }
+
+  section article {
+    font-size: 80%;
+  }
+}
+
+/* base.css ends here */

@@ -124,6 +124,31 @@ def write_about( guide: NortonGuide, args: argparse.Namespace, env: Environment 
         target.write( env.get_template( "about.html" ).render() )
 
 ##############################################################################
+# Generate the path to the stylesheet.
+def css( guide: NortonGuide, args: argparse.Namespace ) -> Path:
+    """Get the name of the stylesheet for the guide.
+
+    :param NortonGuide gide: The guide to generate the css name for.
+    :param ~argparse.Namespace args: The command line arguments.
+    :returns: The path to the stylesheet for the guide.
+    :rtype: ~pathlib.Path
+    """
+    return output( args, prefix( "style.css", guide ) )
+
+##############################################################################
+# Write the stylesheet for the guide.
+def write_css( guide: NortonGuide, args: argparse.Namespace, env: Environment ) -> None:
+    """Write the stylesheet for the guide.
+
+    :param NortonGuide gide: The guide to generate the stylesheet for.
+    :param ~argparse.Namespace args: The command line arguments.
+    :param Environment env: The template environment.
+    """
+    log( f"Writing stylesheet into {css( guide, args )}" )
+    with css( guide, args ).open( "w" ) as target:
+        target.write( env.get_template( "base.css" ).render() )
+
+##############################################################################
 # Convert a guide to HTML.
 def to_html( args: argparse.Namespace ) -> None:
     """Convert a Norton Guide into HTML.
@@ -146,7 +171,14 @@ def to_html( args: argparse.Namespace ) -> None:
         )
 
         # Set up the global variables for template expansion.
-        env.globals = dict( generator=f"ng2web v{__version__}", guide=guide )
+        env.globals = dict(
+            generator  = f"ng2web v{__version__}",
+            guide      = guide,
+            stylesheet = css( guide, args ).name
+        )
+
+        # Write the stylesheet.
+        write_css( guide, args, env )
 
         # Write the about page.
         write_about( guide, args, env )

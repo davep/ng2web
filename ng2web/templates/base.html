@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <meta name="generator" content="{{ generator }}">
+    <link rel="stylesheet" type="text/css" href="{{ stylesheet }}">
     <title>{% block title %}Title not set{% endblock %}</title>
   </head>
 
   <body>
     <section>
-      <article>
+      <article class="box">
         {% block content %}{% endblock %}
       </article>
     </section>
