@@ -5,7 +5,12 @@
 {% block title %}About: {{ guide.title }}{% endblock %}
 
 {% block content %}
-  TODO.
+  <h1>About {{ guide.title }}</h1>
+  <hr />
+  {% for line in guide.credits %}
+    {{ line }}
+  {% endfor %}
+
 {% endblock %}
 
 {# about.html ends here #}
