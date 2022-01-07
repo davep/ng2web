@@ -174,6 +174,7 @@ def to_html( args: argparse.Namespace ) -> None:
         env.globals = dict(
             generator  = f"ng2web v{__version__}",
             guide      = guide,
+            about_url  = about( guide, args ).name,
             stylesheet = css( guide, args ).name
         )
 
