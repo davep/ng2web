@@ -8,7 +8,7 @@ from typing  import Union
 
 ##############################################################################
 # Third party imports.
-from ngdb   import __version__ as ngdb_ver, NortonGuide
+from ngdb   import __version__ as ngdb_ver, NortonGuide, Entry
 from jinja2 import (
     __version__ as jinja_version,
     Environment, PackageLoader, select_autoescape
@@ -147,6 +147,23 @@ def write_css( guide: NortonGuide, args: argparse.Namespace, env: Environment ) 
     log( f"Writing stylesheet into {css( guide, args )}" )
     with css( guide, args ).open( "w" ) as target:
         target.write( env.get_template( "base.css" ).render() )
+
+##############################################################################
+# Generate the name of a file for an entry in the guide.
+def entry( guide: NortonGuide,
+           args: argparse.Namespace, location: Union[ int, Entry ] ) -> Path:
+    """Get the name of an entry in the guide.
+
+    :param NortonGuide gide: The guide to generate the entry file name for.
+    :param ~argparse.Namespace args: The command line arguments.
+    :param Union[int,ngdb.Entry] location: The location of the entry.
+    :returns: The path to the entry file name for the guide.
+    :rtype: ~pathlib.Path
+    """
+    return output(
+        args,
+        prefix( f"{ location if isinstance( location, int ) else location.offset }.html", guide )
+    )
 
 ##############################################################################
 # Convert a guide to HTML.
