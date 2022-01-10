@@ -5,12 +5,12 @@
 {% block content %}
   {% block prelines %}{% endblock %}
   {% block lines %}
-    <pre>
+    <pre class="entry">
       {%- for line in entry -%}
         {%- if line is string -%}
-          {{ line }}
+          <span class="line">{{ line }}</span>
         {%- else -%}
-          <a href="{{ line|urlify }}">{{ line|prompt }}</a>
+          <a class="line" href="{{ line|urlify }}">{{ line|prompt }}</a>
         {%- endif -%}
         <br />
     {%- endfor -%}
