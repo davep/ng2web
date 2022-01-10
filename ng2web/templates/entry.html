@@ -1,0 +1,22 @@
+{# -*- engine: jinja2 -*- #}
+
+{% extends "base.html" %}
+
+{% block content %}
+  {% block prelines %}{% endblock %}
+  {% block lines %}
+    <pre>
+      {%- for line in entry -%}
+        {%- if line is string -%}
+          {{ line }}
+        {%- else -%}
+          <a href="{{ line|urlify }}">{{ line|prompt }}</a>
+        {%- endif -%}
+        <br />
+    {%- endfor -%}
+    </pre>
+  {% endblock %}
+  {% block postlines %}{% endblock %}
+{% endblock %}
+
+{# entry.html ends here #}

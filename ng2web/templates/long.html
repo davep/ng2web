@@ -1,9 +1,11 @@
 {# -*- engine: jinja2 -*- #}
 
-{% extends "base.html" %}
+{% extends "entry.html" %}
 
-{% block content %}
-  Long entry goes here.
+{% block postlines %}
+  {% if entry.has_see_also %}
+    TODO: See Also
+  {% endif %}
 {% endblock %}
 
 {# long.html ends here #}
