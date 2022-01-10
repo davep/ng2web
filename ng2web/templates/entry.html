@@ -8,9 +8,9 @@
     <pre class="entry">
       {%- for line in entry -%}
         {%- if line is string -%}
-          <span class="line">{{ line }}</span>
+          <span class="line">{{ line|toHTML }}</span>
         {%- else -%}
-          <a class="line" href="{{ line|urlify }}">{{ line|prompt }}</a>
+          <a class="line" href="{{ line|urlify }}">{{ line|prompt|toHTML }}</a>
         {%- endif -%}
         <br />
     {%- endfor -%}

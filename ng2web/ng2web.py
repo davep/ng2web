@@ -8,11 +8,12 @@ from typing  import Union
 
 ##############################################################################
 # Third party imports.
-from ngdb   import __version__ as ngdb_ver, NortonGuide, Entry
+from ngdb   import __version__ as ngdb_ver, NortonGuide, Entry, BaseParser
 from jinja2 import (
     __version__ as jinja_version,
     Environment, PackageLoader, select_autoescape
 )
+from markupsafe import Markup, escape
 
 ##############################################################################
 # Local imports.
@@ -204,6 +205,86 @@ def write_entry( entry: Entry,
         )
 
 ##############################################################################
+# NG->HTML conversion parser.
+class ToHTML( BaseParser ):
+    """Class to convert some Norton Guide source into HTML"""
+
+    def __init__( self, line: str ) -> None:
+        """Constructor.
+
+        :param str line: The raw string to parse.
+        """
+        self._html  = ""
+        self._stack = []
+        super().__init__( line )
+
+    def text( self, text: str ) -> None:
+        """Handle the given text.
+
+        :param str text: The text to handle.
+        """
+        self._html += str( escape( text ) )
+
+    def colour( self, colour: int ) -> None:
+        """Handle the given colour value.
+
+        :param int colour: The colour value to handle.
+        """
+        self._html += f'<span class="fg{ colour & 0xF} bg{ colour >> 4}">'
+        self._stack.append( "</span>" )
+
+    def normal( self ) -> None:
+        """Handle being asked to go to normal mode."""
+        self._html += "".join( reversed( self._stack ) )
+        self._stack = []
+
+    def bold( self ) -> None:
+        """Handle being asked to go to bold mode."""
+        self._html += '<span class="ngb">'
+        self._stack.append( "</span>" )
+
+    def unbold( self ) -> None:
+        """Handle being asked to go out of bold mode."""
+        self._html += "</span>"
+        self._stack.pop()
+
+    def reverse( self ) -> None:
+        """Handle being asked to go to reverse mode."""
+        self._html += '<span class="ngr">'
+        self._stack.append( "</span>" )
+
+    def unreverse( self ) -> None:
+        """Handle being asked to go out of reverse mode."""
+        self._html += "</span>"
+        self._stack.pop()
+
+    def underline( self ) -> None:
+        """Handle being asked to go in underline mode."""
+        self._html += '<span class="ngu">'
+        self._stack.append( "</span>" )
+
+    def ununderline( self ) -> None:
+        """Handle being asked to go out of underline mode."""
+        self._html += "</span>"
+        self._stack.pop()
+
+    def char( self, char: int ) -> None:
+        """Handle an individual character value.
+
+        :param int char: The character value to handle.
+        """
+        self.text( chr( char ) )
+
+    def __str__( self ) -> str:
+        """Return the HTML version of the line.
+
+        :returns: The parsed line, as HTML.
+        :rtype: str
+        """
+        self.normal()
+        return self._html
+
+##############################################################################
 # Convert a guide to HTML.
 def to_html( args: argparse.Namespace ) -> None:
     """Convert a Norton Guide into HTML.
@@ -237,7 +318,8 @@ def to_html( args: argparse.Namespace ) -> None:
         env.filters = dict(
             prompt = lambda option: option[ 0 ],
             offset = lambda option: option[ 1 ],
-            urlify = lambda option: entry_file( guide, args, option[ 1 ] ).name
+            urlify = lambda option: entry_file( guide, args, option[ 1 ] ).name,
+            toHTML = lambda src: Markup( ToHTML( src ) )
         )
 
         # Write the stylesheet.
