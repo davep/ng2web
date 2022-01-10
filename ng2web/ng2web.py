@@ -178,7 +178,11 @@ def write_entry( entry: Entry,
     """
     log( f"Writing {entry.__class__.__name__.lower()} entry to {entry_file( guide, args, entry )}" )
     with entry_file( guide, args, entry ).open( "w" ) as target:
-        target.write( env.get_template( f"{entry.__class__.__name__.lower()}.html" ).render() )
+        target.write(
+            env.get_template( f"{entry.__class__.__name__.lower()}.html" ).render(
+                entry=entry
+            )
+        )
 
 ##############################################################################
 # Convert a guide to HTML.
