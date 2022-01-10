@@ -28,14 +28,14 @@
 
       <nav class="menu box">
         <ul>
-          {% for menu in guide.menus %}
+          {%- for menu in guide.menus %}
             <li>{{ menu }}</li>
             <ul>
-              {% for option in menu %}
+              {% for option in menu -%}
                 <li><a href="{{ option|urlify }}">{{ option|prompt }}</a></li>
               {% endfor %}
             </ul>
-          {% endfor %}
+          {%- endfor %}
         </ul>
       </nav>
 
