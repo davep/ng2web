@@ -200,7 +200,16 @@ def write_entry( entry: Entry,
     with entry_file( guide, args, entry ).open( "w" ) as target:
         target.write(
             env.get_template( f"{entry.__class__.__name__.lower()}.html" ).render(
-                entry=entry
+                entry        = entry,
+                previous_url = entry_file(
+                    guide, args, entry.previous
+                ).name if entry.has_previous else None,
+                next_url     = entry_file(
+                    guide, args, entry.next
+                ) if entry.has_next else None,
+                up_url       = entry_file(
+                    guide, args, entry.parent.offset
+                ).name if entry.parent else None
             )
         )
 
