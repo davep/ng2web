@@ -143,6 +143,16 @@ section article a {
   display: inline-block;
 }
 
+{% for i, c in colours %}
+span.bg{{ i }} {
+    background: {{ c }};
+}
+
+span.fg{{ i }} {
+    color: {{ c }};
+}
+{% endfor %}
+
 @media screen and (max-width: 480px) {
 
   .box {

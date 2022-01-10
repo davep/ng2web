@@ -146,7 +146,26 @@ def write_css( guide: NortonGuide, args: argparse.Namespace, env: Environment ) 
     """
     log( f"Writing stylesheet into {css( guide, args )}" )
     with css( guide, args ).open( "w" ) as target:
-        target.write( env.get_template( "base.css" ).render() )
+        target.write( env.get_template( "base.css" ).render(
+            colours = enumerate( (
+                "black",
+                "navy",
+                "green",
+                "teal",
+                "maroon",
+                "purple",
+                "olive",
+                "silver",
+                "gray",
+                "blue",
+                "lime",
+                "aqua",
+                "red",
+                "fuchsia",
+                "yellow",
+                "white"
+            ) )
+        ) )
 
 ##############################################################################
 # Generate the name of a file for an entry in the guide.
