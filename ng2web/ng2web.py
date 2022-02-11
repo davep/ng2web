@@ -227,6 +227,20 @@ class ToHTML( BaseParser ):
         self._stack = []
         super().__init__( line )
 
+    def _span( self, cls: str ) -> None:
+        """Start a span in the HTML.
+
+        :param str cls: The class for the ``span``.
+
+        As a side-effect the closing tag will be added to the stack.
+        """
+        self._html += f'<span class="{cls}">'
+        self._stack.append( "</span>" )
+
+    def _unspan( self ) -> None:
+        """End a previous span."""
+        self._html += self._stack.pop()
+
     def text( self, text: str ) -> None:
         """Handle the given text.
 
@@ -239,8 +253,7 @@ class ToHTML( BaseParser ):
 
         :param int colour: The colour value to handle.
         """
-        self._html += f'<span class="fg{ colour & 0xF} bg{ colour >> 4}">'
-        self._stack.append( "</span>" )
+        self._span( f"fg{ colour & 0xF} bg{ colour >> 4}" )
 
     def normal( self ) -> None:
         """Handle being asked to go to normal mode."""
@@ -249,33 +262,27 @@ class ToHTML( BaseParser ):
 
     def bold( self ) -> None:
         """Handle being asked to go to bold mode."""
-        self._html += '<span class="ngb">'
-        self._stack.append( "</span>" )
+        self._span( "ngb" )
 
     def unbold( self ) -> None:
         """Handle being asked to go out of bold mode."""
-        self._html += "</span>"
-        self._stack.pop()
+        self._unspan()
 
     def reverse( self ) -> None:
         """Handle being asked to go to reverse mode."""
-        self._html += '<span class="ngr">'
-        self._stack.append( "</span>" )
+        self._span( "ngr" )
 
     def unreverse( self ) -> None:
         """Handle being asked to go out of reverse mode."""
-        self._html += "</span>"
-        self._stack.pop()
+        self._unspan()
 
     def underline( self ) -> None:
         """Handle being asked to go in underline mode."""
-        self._html += '<span class="ngu">'
-        self._stack.append( "</span>" )
+        self._span( "ngu" )
 
     def ununderline( self ) -> None:
         """Handle being asked to go out of underline mode."""
-        self._html += "</span>"
-        self._stack.pop()
+        self._unspan()
 
     def char( self, char: int ) -> None:
         """Handle an individual character value.
