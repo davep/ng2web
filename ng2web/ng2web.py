@@ -49,7 +49,7 @@ def output( args: argparse.Namespace, file_name: Union[ Path, str ] ) -> Path:
     """Expand a file's name so that it's within the output location.
 
     :param ~argparse.Namespace args: The command line arguments.
-    :parag Union[~pathlib.Path,str] file_name: The file's name.
+    :param Union[~pathlib.Path,str] file_name: The file's name.
     :returns: The full path to the file, within the output location.
     :rtype: ~pathlib.Path
 
