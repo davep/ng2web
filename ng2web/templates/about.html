@@ -10,7 +10,7 @@
   <hr />
   <pre>
     {% for line in guide.credits %}
-      {{ line }}
+      {{ line|toHTML }}
     {% endfor %}
   </pre>
 
