@@ -104,7 +104,7 @@ def get_args() -> argparse.Namespace:
 def about( guide: NortonGuide, args: argparse.Namespace ) -> Path:
     """Get the name of the about page for the guide.
 
-    :param NortonGuide gide: The guide to generate the about name for.
+    :param NortonGuide guide: The guide to generate the about name for.
     :param ~argparse.Namespace args: The command line arguments.
     :returns: The path to the about file for the guide.
     :rtype: ~pathlib.Path
@@ -116,7 +116,7 @@ def about( guide: NortonGuide, args: argparse.Namespace ) -> Path:
 def write_about( guide: NortonGuide, args: argparse.Namespace, env: Environment ) -> None:
     """Write the about page for the guide.
 
-    :param NortonGuide gide: The guide to generate the about name for.
+    :param NortonGuide guide: The guide to generate the about name for.
     :param ~argparse.Namespace args: The command line arguments.
     :param Environment env: The template environment.
     """
@@ -129,7 +129,7 @@ def write_about( guide: NortonGuide, args: argparse.Namespace, env: Environment 
 def css( guide: NortonGuide, args: argparse.Namespace ) -> Path:
     """Get the name of the stylesheet for the guide.
 
-    :param NortonGuide gide: The guide to generate the css name for.
+    :param NortonGuide guide: The guide to generate the css name for.
     :param ~argparse.Namespace args: The command line arguments.
     :returns: The path to the stylesheet for the guide.
     :rtype: ~pathlib.Path
@@ -141,7 +141,7 @@ def css( guide: NortonGuide, args: argparse.Namespace ) -> Path:
 def write_css( guide: NortonGuide, args: argparse.Namespace, env: Environment ) -> None:
     """Write the stylesheet for the guide.
 
-    :param NortonGuide gide: The guide to generate the stylesheet for.
+    :param NortonGuide guide: The guide to generate the stylesheet for.
     :param ~argparse.Namespace args: The command line arguments.
     :param Environment env: The template environment.
     """
@@ -174,7 +174,7 @@ def entry_file( guide: NortonGuide,
            args: argparse.Namespace, location: Union[ int, Entry ] ) -> Path:
     """Get the name of an entry in the guide.
 
-    :param NortonGuide gide: The guide to generate the entry file name for.
+    :param NortonGuide guide: The guide to generate the entry file name for.
     :param ~argparse.Namespace args: The command line arguments.
     :param Union[int,ngdb.Entry] location: The location of the entry.
     :returns: The path to the entry file name for the guide.
@@ -192,7 +192,7 @@ def write_entry( entry: Entry,
     """Write the an entry from the guide.
 
     :param ~ngdb.Entry entry: The entry to write.
-    :param NortonGuide gide: The guide the entry came from.
+    :param NortonGuide guide: The guide the entry came from.
     :param ~argparse.Namespace args: The command line arguments.
     :param Environment env: The template environment.
     """
