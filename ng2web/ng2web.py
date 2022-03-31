@@ -303,6 +303,31 @@ class ToHTML( BaseParser ):
         return self._html
 
 ##############################################################################
+# Get an entry's title.
+def entry_title( guide: NortonGuide, entry: Entry ) -> str:
+    """Generate a title for the given entry.
+
+    :param NortonGuide guide: The guide that the entry came from.
+    :param ngdb.Entry entry: The entry to get the title for.
+    :returns: A title for the entry.
+    :rtype: str
+    """
+
+    # Start with the guide title.
+    title = [ guide.title ]
+
+    # If there's a parent menu...
+    if entry.parent.has_menu:
+        title += [ guide.menus[ entry.parent.menu ].title ]
+
+    # If there's a parent menu prompt...
+    if entry.parent.has_prompt:
+        title += [ guide.menus[ entry.parent.menu ].prompts[ entry.parent.prompt ] ]
+
+    # Join it all up.
+    return " » ".join( make_dos_like( part ) for part in title )
+
+##############################################################################
 # Convert a guide to HTML.
 def to_html( args: argparse.Namespace ) -> None:
     """Convert a Norton Guide into HTML.
@@ -337,7 +362,8 @@ def to_html( args: argparse.Namespace ) -> None:
             prompt = lambda option: option[ 0 ],
             offset = lambda option: option[ 1 ],
             urlify = lambda option: entry_file( guide, args, option[ 1 ] ).name,
-            toHTML = lambda src: Markup( ToHTML( src ) )
+            toHTML = lambda src: Markup( ToHTML( src ) ),
+            title  = lambda entry: entry_title( guide, entry )
         )
 
         # Write the stylesheet.
