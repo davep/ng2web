@@ -58,13 +58,19 @@ setup(
     ),
     classifiers                   = [
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+        "Environment :: Console",
         "Development Status :: 3 - Alpha",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Information Technology",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Topic :: Documentation",
         "Topic :: Software Development :: Documentation",
+        "Topic :: Text Processing :: Markup",
+        "Topic :: Text Processing :: Markup :: HTML",
+        "Topic :: Utilities",
         "Typing :: Typed"
     ]
 
