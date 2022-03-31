@@ -4,7 +4,7 @@
 # Python imports.
 import argparse
 from pathlib import Path
-from typing  import Union, List
+from typing  import Optional, Union, List
 
 ##############################################################################
 # Third party imports.
@@ -303,13 +303,13 @@ class ToHTML( BaseParser ):
         return self._html
 
 ##############################################################################
-# Get an entry's title.
-def entry_title( guide: NortonGuide, entry: Entry ) -> str:
-    """Generate a title for the given entry.
+# Get a title for the current page.
+def page_title( guide: NortonGuide, entry: Optional[ Entry ]=None ) -> str:
+    """Generate a title appropriate for the current page.
 
     :param NortonGuide guide: The guide that the entry came from.
-    :param ngdb.Entry entry: The entry to get the title for.
-    :returns: A title for the entry.
+    :param Optional[ngdb.Entry] entry: The entry to get the title for.
+    :returns: A title for the current page.
     :rtype: str
     """
 
@@ -317,11 +317,11 @@ def entry_title( guide: NortonGuide, entry: Entry ) -> str:
     title = [ guide.title ]
 
     # If there's a parent menu...
-    if entry.parent.has_menu:
+    if entry and entry.parent.has_menu:
         title += [ guide.menus[ entry.parent.menu ].title ]
 
     # If there's a parent menu prompt...
-    if entry.parent.has_prompt:
+    if entry and entry.parent.has_prompt:
         title += [ guide.menus[ entry.parent.menu ].prompts[ entry.parent.prompt ] ]
 
     # Join it all up.
@@ -363,7 +363,7 @@ def to_html( args: argparse.Namespace ) -> None:
             offset = lambda option: option[ 1 ],
             urlify = lambda option: entry_file( guide, args, option[ 1 ] ).name,
             toHTML = lambda src: Markup( ToHTML( src ) ),
-            title  = lambda entry: entry_title( guide, entry )
+            title  = lambda entry: page_title( guide, entry )
         )
 
         # Write the stylesheet.
