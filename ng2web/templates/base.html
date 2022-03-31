@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{{ stylesheet }}">
     <title>{% block title %}{{ None|title }}{% endblock %}</title>
     <meta name="decription" content="{{ None|title }}">
+    {% if previous_url %}<link rel="prev" href="{{ previous_url }}">{% endif %}
+    {% if next_url %}<link rel="next" href="{{ next_url }}">{% endif %}
     {% block extraheaders %}{% endblock %}
   </head>
 
