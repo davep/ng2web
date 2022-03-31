@@ -4,7 +4,7 @@
 # Python imports.
 import argparse
 from pathlib import Path
-from typing  import Union
+from typing  import Union, List
 
 ##############################################################################
 # Third party imports.
@@ -386,8 +386,8 @@ class ToHTML( BaseParser ):
 
         :param str line: The raw string to parse.
         """
-        self._html  = ""
-        self._stack = []
+        self._html               = ""
+        self._stack: List[ str ] = []
         super().__init__( line )
 
     def _span( self, cls: str ) -> None:
