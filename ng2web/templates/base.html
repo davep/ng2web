@@ -9,6 +9,7 @@
     <meta name="generator" content="{{ generator }}">
     <link rel="stylesheet" type="text/css" href="{{ stylesheet }}">
     <title>{% block title %}{{ None|title }}{% endblock %}</title>
+    {% block extraheaders %}{% endblock %}
   </head>
 
   <body>
