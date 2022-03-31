@@ -326,7 +326,7 @@ def to_html( args: argparse.Namespace ) -> None:
 
         # Set up the global variables for template expansion.
         env.globals = dict(
-            generator  = f"ng2web v{__version__}",
+            generator  = f"ng2web v{__version__} (ngdb v{ngdb_ver})",
             guide      = guide,
             about_url  = about( guide, args ).name,
             stylesheet = css( guide, args ).name
