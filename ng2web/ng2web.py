@@ -346,7 +346,7 @@ def to_html( args: argparse.Namespace ) -> None:
         # Bootstrap the template stuff.
         env = Environment(
             loader     = PackageLoader( Path( __file__ ).stem ),
-            autoescape = select_autoescape(),
+            autoescape = select_autoescape()
         )
 
         # Set up the global variables for template expansion.
