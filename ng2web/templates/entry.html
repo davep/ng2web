@@ -12,7 +12,7 @@
         {%- if line is string -%}
           <span class="line">{{ line|toHTML }}</span>
         {%- else -%}
-          <a class="line" href="{{ line|urlify }}">{{ line|prompt|toHTML }}</a>
+          <a class="line" href="{{ line|urlify }}">{{ line.text|toHTML }}</a>
         {%- endif -%}
         <br />
     {%- endfor -%}
