@@ -359,9 +359,7 @@ def to_html( args: argparse.Namespace ) -> None:
 
         # Set up the filters for the guide templates.
         env.filters = dict(
-            prompt = lambda option: option[ 0 ],
-            offset = lambda option: option[ 1 ],
-            urlify = lambda option: entry_file( guide, args, option[ 1 ] ).name,
+            urlify = lambda option: entry_file( guide, args, option.offset ).name,
             toHTML = lambda src: Markup( ToHTML( src ) ),
             title  = lambda entry: page_title( guide, entry )
         )
