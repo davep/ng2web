@@ -36,7 +36,7 @@ setup(
 
     name                          = "ng2web",
     version                       = ng2web.__version__,
-    description                   = ng2web.__doc__,
+    description                   = str( ng2web.__doc__ ),
     long_description              = long_desc(),
     long_description_content_type = "text/markdown",
     url                           = "https://github.com/davep/ng2web",
