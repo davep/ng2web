@@ -36,7 +36,7 @@
             <li>{{ menu }}</li>
             <ul>
               {% for option in menu -%}
-                <li><a href="{{ option|urlify }}">{{ option.prompt }}</a></li>
+                <li><a href="{{ option|urlify }}">{{ option.text }}</a></li>
               {% endfor %}
             </ul>
           {%- endfor %}
