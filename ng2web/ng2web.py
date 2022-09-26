@@ -9,7 +9,7 @@ from typing  import Optional, Union, List
 ##############################################################################
 # Third party imports.
 from ngdb import (
-    __version__ as ngdb_ver, NortonGuide, Entry, BaseParser, make_dos_like
+    __version__ as ngdb_ver, NortonGuide, Entry, MarkupText, make_dos_like
 )
 from jinja2 import (
     __version__ as jinja_version,
@@ -217,90 +217,65 @@ def write_entry( entry: Entry,
 
 ##############################################################################
 # NG->HTML conversion parser.
-class ToHTML( BaseParser ):
+class ToHTML( MarkupText ):
     """Class to convert some Norton Guide source into HTML"""
 
-    def __init__( self, line: str ) -> None:
-        """Constructor.
+    def open_markup( self, cls: str ) -> str:
+        """Open markup for the given class.
 
-        :param str line: The raw string to parse.
+        :param str cls: The class of thing to open the markup for.
+        :returns: The opening markup text.
+        :rtype: str
         """
-        self._html               = ""
-        self._stack: List[ str ] = []
-        super().__init__( line )
+        return f'<span class="{cls}">'
 
-    def _span( self, cls: str ) -> None:
-        """Start a span in the HTML.
+    def close_markup( self, cls: str ) -> str:
+        """Close markup for the given class.
 
-        :param str cls: The class for the ``span``.
-
-        As a side-effect the closing tag will be added to the stack.
+        :param str cls: The class of thing to close the markup for.
+        :returns: The closing markup text.
+        :rtype: str
         """
-        self._html += f'<span class="{cls}">'
-        self._stack.append( "</span>" )
-
-    def _unspan( self ) -> None:
-        """End a previous span."""
-        self._html += self._stack.pop()
+        del cls
+        return "</span>"
 
     def text( self, text: str ) -> None:
         """Handle the given text.
 
         :param str text: The text to handle.
         """
-        self._html += str( escape( make_dos_like( text ) ) )
+        super().text( str( escape( make_dos_like( text ) ) ) )
 
     def colour( self, colour: int ) -> None:
         """Handle the given colour value.
 
         :param int colour: The colour value to handle.
         """
-        self._span( f"fg{ colour & 0xF} bg{ colour >> 4}" )
-
-    def normal( self ) -> None:
-        """Handle being asked to go to normal mode."""
-        self._html += "".join( reversed( self._stack ) )
-        self._stack = []
+        self.begin_markup( f"fg{ colour & 0xF} bg{ colour >> 4}" )
 
     def bold( self ) -> None:
         """Handle being asked to go to bold mode."""
-        self._span( "ngb" )
+        self.begin_markup( "ngb" )
 
     def unbold( self ) -> None:
         """Handle being asked to go out of bold mode."""
-        self._unspan()
+        self.end_markup()
 
     def reverse( self ) -> None:
         """Handle being asked to go to reverse mode."""
-        self._span( "ngr" )
+        self.begin_markup( "ngr" )
 
     def unreverse( self ) -> None:
         """Handle being asked to go out of reverse mode."""
-        self._unspan()
+        self.end_markup()
 
     def underline( self ) -> None:
         """Handle being asked to go in underline mode."""
-        self._span( "ngu" )
+        self.begin_markup( "ngu" )
 
     def ununderline( self ) -> None:
         """Handle being asked to go out of underline mode."""
-        self._unspan()
-
-    def char( self, char: int ) -> None:
-        """Handle an individual character value.
-
-        :param int char: The character value to handle.
-        """
-        self.text( chr( char ) )
-
-    def __str__( self ) -> str:
-        """Return the HTML version of the line.
-
-        :returns: The parsed line, as HTML.
-        :rtype: str
-        """
-        self.normal()
-        return self._html
+        self.end_markup()
 
 ##############################################################################
 # Get a title for the current page.
