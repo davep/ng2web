@@ -2,9 +2,9 @@
 
 ##############################################################################
 # Python imports.
+from __future__ import annotations
+from pathlib    import Path
 import argparse
-from pathlib import Path
-from typing  import Optional, Union
 
 ##############################################################################
 # Third party imports.
@@ -22,11 +22,11 @@ from markupsafe import Markup, escape
 from . import __version__
 
 ##############################################################################
-# Quick and dirty logger.
 def log( msg: str ) -> None:
     """Simple logging function.
 
-    :param str msg: The message to log.
+    Args:
+        msg (str): The message to log.
 
     At some point soon I'll possibly switch to proper logging, but just for
     now...
@@ -34,40 +34,41 @@ def log( msg: str ) -> None:
     print( msg )
 
 ##############################################################################
-# Prefix some text with a guide's "namespace".
 def prefix( text: str, guide: NortonGuide ) -> str:
     """Prefix the given text with the guide's namespace.
 
-    :param str text: The text to prefix.
-    :param NortonGuide guide: The guide we're working with.
-    :returns: The prefixed text.
-    :rtype: str
+    Args:
+        text (str): The text to prefix.
+        guide (NortonGuide): The guide we're working with.
+
+    Returns:
+        str: The prefixed text.
     """
     return f"{guide.path.stem}-{text}"
 
 ##############################################################################
-# Locate a file within the user-specified output location.
-def output( args: argparse.Namespace, file_name: Union[ Path, str ] ) -> Path:
+def output( args: argparse.Namespace, file_name: Path | str ) -> Path:
     """Expand a file's name so that it's within the output location.
 
-    :param ~argparse.Namespace args: The command line arguments.
-    :param Union[~pathlib.Path,str] file_name: The file's name.
-    :returns: The full path to the file, within the output location.
-    :rtype: ~pathlib.Path
+    Args:
+        args (argparse.Namespace): The command line arguments.
+        file_name (Path | str): The file's name.
 
+    Returns:
+        Path: The full path to the file, within the output location.
 
-    Note that this function will expand any user information within the
-    specified output path and also resolve the result.
+    Note:
+       This function will expand any user information within the specified
+       output path and also resolve the result.
     """
     return Path( args.output ).expanduser().resolve() / Path( file_name )
 
 ##############################################################################
-# Parse the arguments.
 def get_args() -> argparse.Namespace:
     """Get the arguments passed by the user.
 
-    :returns: The parsed arguments.
-    :rtype: ~argparse.Namespace
+    Returns:
+        argparse.Namespace: The parsed arguments.
     """
 
     # Version information, used in a couple of paces.
@@ -102,50 +103,52 @@ def get_args() -> argparse.Namespace:
     return parser.parse_args()
 
 ##############################################################################
-# Generate the path to the about page.
 def about( guide: NortonGuide, args: argparse.Namespace ) -> Path:
     """Get the name of the about page for the guide.
 
-    :param NortonGuide guide: The guide to generate the about name for.
-    :param ~argparse.Namespace args: The command line arguments.
-    :returns: The path to the about file for the guide.
-    :rtype: ~pathlib.Path
+    Args:
+        guide (NortonGuide): The guide to generate the about name for.
+        args (argparse.Namespace): The command line arguments.
+
+    Returns:
+        Path: The path to the about file for the guide.
     """
     return output( args, prefix( "about.html", guide ) )
 
 ##############################################################################
-# Write the about page for the guide.
 def write_about( guide: NortonGuide, args: argparse.Namespace, env: Environment ) -> None:
     """Write the about page for the guide.
 
-    :param NortonGuide guide: The guide to generate the about name for.
-    :param ~argparse.Namespace args: The command line arguments.
-    :param Environment env: The template environment.
+    Args:
+        guide (NortonGuide): The guide to generate the about name for.
+        args (argparse.Namespace): The command line arguments.
+        env (Environment): The template environment.
     """
     log( f"Writing about into {about( guide, args )}" )
     with about( guide, args ).open( "w" ) as target:
         target.write( env.get_template( "about.html" ).render() )
 
 ##############################################################################
-# Generate the path to the stylesheet.
 def css( guide: NortonGuide, args: argparse.Namespace ) -> Path:
     """Get the name of the stylesheet for the guide.
 
-    :param NortonGuide guide: The guide to generate the css name for.
-    :param ~argparse.Namespace args: The command line arguments.
-    :returns: The path to the stylesheet for the guide.
-    :rtype: ~pathlib.Path
+    Args:
+        guide (NortonGuide): The guide to generate the css name for.
+        args (argparse.Namespace): The command line arguments.
+
+    Returns:
+        Path: The path to the stylesheet for the guide.
     """
     return output( args, prefix( "style.css", guide ) )
 
 ##############################################################################
-# Write the stylesheet for the guide.
 def write_css( guide: NortonGuide, args: argparse.Namespace, env: Environment ) -> None:
     """Write the stylesheet for the guide.
 
-    :param NortonGuide guide: The guide to generate the stylesheet for.
-    :param ~argparse.Namespace args: The command line arguments.
-    :param Environment env: The template environment.
+    Args:
+        guide (NortonGuide): The guide to generate the stylesheet for.
+        args (argparse.Namespace): The command line arguments.
+        env (Environment): The template environment.
     """
     log( f"Writing stylesheet into {css( guide, args )}" )
     with css( guide, args ).open( "w" ) as target:
@@ -171,9 +174,8 @@ def write_css( guide: NortonGuide, args: argparse.Namespace, env: Environment ) 
         ) )
 
 ##############################################################################
-# Generate the name of a file for an entry in the guide.
 def entry_file( guide: NortonGuide,
-           args: argparse.Namespace, location: Union[ int, Entry ] ) -> Path:
+           args: argparse.Namespace, location: int | Entry ) -> Path:
     """Get the name of an entry in the guide.
 
     :param NortonGuide guide: The guide to generate the entry file name for.
@@ -188,15 +190,15 @@ def entry_file( guide: NortonGuide,
     )
 
 ##############################################################################
-# Write a file for the given entry.
 def write_entry( entry: Entry,
                  guide: NortonGuide, args: argparse.Namespace, env: Environment ) -> None:
     """Write the an entry from the guide.
 
-    :param ~ngdb.Entry entry: The entry to write.
-    :param NortonGuide guide: The guide the entry came from.
-    :param ~argparse.Namespace args: The command line arguments.
-    :param Environment env: The template environment.
+    Args:
+        entry (Entry): The entry to write.
+        guide (NortonGuide): The guide the entry came from.
+        args (argparse.Namespace): The command line arguments.
+        env (Environment): The template environment.
     """
     log( f"Writing {entry.__class__.__name__.lower()} entry to {entry_file( guide, args, entry )}" )
     with entry_file( guide, args, entry ).open( "w" ) as target:
@@ -216,25 +218,28 @@ def write_entry( entry: Entry,
         )
 
 ##############################################################################
-# NG->HTML conversion parser.
 class ToHTML( MarkupText ):
     """Class to convert some Norton Guide source into HTML"""
 
     def open_markup( self, cls: str ) -> str:
         """Open markup for the given class.
 
-        :param str cls: The class of thing to open the markup for.
-        :returns: The opening markup text.
-        :rtype: str
+        Args:
+            cls (str): The class of thing to open the markup for.
+
+        Returns:
+            str: The opening markup text.
         """
         return f'<span class="{cls}">'
 
     def close_markup( self, cls: str ) -> str:
         """Close markup for the given class.
 
-        :param str cls: The class of thing to close the markup for.
-        :returns: The closing markup text.
-        :rtype: str
+        Args:
+            cls (str): The class of thing to close the markup for.
+
+        Returns:
+            str: The closing markup text.
         """
         del cls
         return "</span>"
@@ -242,14 +247,16 @@ class ToHTML( MarkupText ):
     def text( self, text: str ) -> None:
         """Handle the given text.
 
-        :param str text: The text to handle.
+        Args:
+            text (str): The text to handle.
         """
         super().text( str( escape( make_dos_like( text ) ) ) )
 
     def colour( self, colour: int ) -> None:
         """Handle the given colour value.
 
-        :param int colour: The colour value to handle.
+        Args:
+            colour (int): The colour value to handle.
         """
         self.begin_markup( f"fg{ colour & 0xF} bg{ colour >> 4}" )
 
@@ -278,14 +285,15 @@ class ToHTML( MarkupText ):
         self.end_markup()
 
 ##############################################################################
-# Get a title for the current page.
-def page_title( guide: NortonGuide, entry: Optional[ Entry ]=None ) -> str:
+def page_title( guide: NortonGuide, entry: Entry | None = None ) -> str:
     """Generate a title appropriate for the current page.
 
-    :param NortonGuide guide: The guide that the entry came from.
-    :param Optional[ngdb.Entry] entry: The entry to get the title for.
-    :returns: A title for the current page.
-    :rtype: str
+    Args:
+        guide (NortonGuide): The guide that the entry came from.
+        entry (ngdb.Entry | None, optional): The entry to get the title for.
+
+    Returns:
+        str: A title for the current page.
     """
 
     # Start with the guide title.
@@ -303,11 +311,11 @@ def page_title( guide: NortonGuide, entry: Optional[ Entry ]=None ) -> str:
     return " » ".join( make_dos_like( part ) for part in title )
 
 ##############################################################################
-# Convert a guide to HTML.
 def to_html( args: argparse.Namespace ) -> None:
     """Convert a Norton Guide into HTML.
 
-    :param ~argparse.Namespace args: The command line arguments.
+    Args:
+        args (argparse.Namespace): The command line arguments.
     """
 
     # Open the guide. Note that we turn it into a Path, and just to be kind
