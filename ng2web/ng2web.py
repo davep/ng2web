@@ -178,11 +178,13 @@ def entry_file( guide: NortonGuide,
            args: argparse.Namespace, location: int | Entry ) -> Path:
     """Get the name of an entry in the guide.
 
-    :param NortonGuide guide: The guide to generate the entry file name for.
-    :param ~argparse.Namespace args: The command line arguments.
-    :param Union[int,ngdb.Entry] location: The location of the entry.
-    :returns: The path to the entry file name for the guide.
-    :rtype: ~pathlib.Path
+    Args:
+        guide (NortonGuide): The guide to generate the entry file name for.
+        args (argparse.Namespace): The command line arguments.
+        location (int | Entry): The location of the entry.
+
+    Returns:
+        Path: The path to the entry file name for the guide.
     """
     return output(
         args,
