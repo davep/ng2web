@@ -4,7 +4,7 @@
 # Python imports.
 import argparse
 from pathlib import Path
-from typing  import Optional, Union, List
+from typing  import Optional, Union
 
 ##############################################################################
 # Third party imports.
