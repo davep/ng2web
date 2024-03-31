@@ -27,7 +27,7 @@ def log(msg: str) -> None:
     """Simple logging function.
 
     Args:
-        msg (str): The message to log.
+        msg: The message to log.
 
     At some point soon I'll possibly switch to proper logging, but just for
     now...
@@ -40,11 +40,11 @@ def prefix(text: str, guide: NortonGuide) -> str:
     """Prefix the given text with the guide's namespace.
 
     Args:
-        text (str): The text to prefix.
-        guide (NortonGuide): The guide we're working with.
+        text: The text to prefix.
+        guide: The guide we're working with.
 
     Returns:
-        str: The prefixed text.
+        The prefixed text.
     """
     return f"{guide.path.stem}-{text}"
 
@@ -54,11 +54,11 @@ def output(args: argparse.Namespace, file_name: Path | str) -> Path:
     """Expand a file's name so that it's within the output location.
 
     Args:
-        args (argparse.Namespace): The command line arguments.
-        file_name (Path | str): The file's name.
+        args: The command line arguments.
+        file_name: The file's name.
 
     Returns:
-        Path: The full path to the file, within the output location.
+        The full path to the file, within the output location.
 
     Note:
        This function will expand any user information within the specified
@@ -72,7 +72,7 @@ def get_args() -> argparse.Namespace:
     """Get the arguments passed by the user.
 
     Returns:
-        argparse.Namespace: The parsed arguments.
+        The parsed arguments.
     """
 
     # Version information, used in a couple of paces.
@@ -114,11 +114,11 @@ def about(guide: NortonGuide, args: argparse.Namespace) -> Path:
     """Get the name of the about page for the guide.
 
     Args:
-        guide (NortonGuide): The guide to generate the about name for.
-        args (argparse.Namespace): The command line arguments.
+        guide: The guide to generate the about name for.
+        args: The command line arguments.
 
     Returns:
-        Path: The path to the about file for the guide.
+        The path to the about file for the guide.
     """
     return output(args, prefix("about.html", guide))
 
@@ -128,9 +128,9 @@ def write_about(guide: NortonGuide, args: argparse.Namespace, env: Environment) 
     """Write the about page for the guide.
 
     Args:
-        guide (NortonGuide): The guide to generate the about name for.
-        args (argparse.Namespace): The command line arguments.
-        env (Environment): The template environment.
+        guide: The guide to generate the about name for.
+        args: The command line arguments.
+        env: The template environment.
     """
     log(f"Writing about into {about( guide, args )}")
     with about(guide, args).open("w") as target:
@@ -142,11 +142,11 @@ def css(guide: NortonGuide, args: argparse.Namespace) -> Path:
     """Get the name of the stylesheet for the guide.
 
     Args:
-        guide (NortonGuide): The guide to generate the css name for.
-        args (argparse.Namespace): The command line arguments.
+        guide: The guide to generate the css name for.
+        args: The command line arguments.
 
     Returns:
-        Path: The path to the stylesheet for the guide.
+        The path to the stylesheet for the guide.
     """
     return output(args, prefix("style.css", guide))
 
@@ -156,9 +156,9 @@ def write_css(guide: NortonGuide, args: argparse.Namespace, env: Environment) ->
     """Write the stylesheet for the guide.
 
     Args:
-        guide (NortonGuide): The guide to generate the stylesheet for.
-        args (argparse.Namespace): The command line arguments.
-        env (Environment): The template environment.
+        guide: The guide to generate the stylesheet for.
+        args: The command line arguments.
+        env: The template environment.
     """
     log(f"Writing stylesheet into {css( guide, args )}")
     with css(guide, args).open("w") as target:
@@ -195,12 +195,12 @@ def entry_file(
     """Get the name of an entry in the guide.
 
     Args:
-        guide (NortonGuide): The guide to generate the entry file name for.
-        args (argparse.Namespace): The command line arguments.
-        location (int | Entry): The location of the entry.
+        guid: The guide to generate the entry file name for.
+        args: The command line arguments.
+        location: The location of the entry.
 
     Returns:
-        Path: The path to the entry file name for the guide.
+        The path to the entry file name for the guide.
     """
     return output(
         args,
@@ -218,10 +218,10 @@ def write_entry(
     """Write the an entry from the guide.
 
     Args:
-        entry (Entry): The entry to write.
-        guide (NortonGuide): The guide the entry came from.
-        args (argparse.Namespace): The command line arguments.
-        env (Environment): The template environment.
+        entry: The entry to write.
+        guide: The guide the entry came from.
+        args: The command line arguments.
+        env: The template environment.
     """
     log(
         f"Writing {entry.__class__.__name__.lower()} entry to {entry_file( guide, args, entry )}"
@@ -255,10 +255,10 @@ class ToHTML(MarkupText):
         """Open markup for the given class.
 
         Args:
-            cls (str): The class of thing to open the markup for.
+            cls: The class of thing to open the markup for.
 
         Returns:
-            str: The opening markup text.
+            The opening markup text.
         """
         return f'<span class="{cls}">'
 
@@ -266,10 +266,10 @@ class ToHTML(MarkupText):
         """Close markup for the given class.
 
         Args:
-            cls (str): The class of thing to close the markup for.
+            cls: The class of thing to close the markup for.
 
         Returns:
-            str: The closing markup text.
+            The closing markup text.
         """
         del cls
         return "</span>"
@@ -278,7 +278,7 @@ class ToHTML(MarkupText):
         """Handle the given text.
 
         Args:
-            text (str): The text to handle.
+            text: The text to handle.
         """
         super().text(str(escape(make_dos_like(text))))
 
@@ -286,7 +286,7 @@ class ToHTML(MarkupText):
         """Handle the given colour value.
 
         Args:
-            colour (int): The colour value to handle.
+            colour: The colour value to handle.
         """
         self.begin_markup(f"fg{ colour & 0xF} bg{ colour >> 4}")
 
@@ -320,11 +320,11 @@ def page_title(guide: NortonGuide, entry: Entry | None = None) -> str:
     """Generate a title appropriate for the current page.
 
     Args:
-        guide (NortonGuide): The guide that the entry came from.
-        entry (ngdb.Entry | None, optional): The entry to get the title for.
+        guide: The guide that the entry came from.
+        entry: The entry to get the title for.
 
     Returns:
-        str: A title for the current page.
+        A title for the current page.
     """
 
     # Start with the guide title.
@@ -347,7 +347,7 @@ def to_html(args: argparse.Namespace) -> None:
     """Convert a Norton Guide into HTML.
 
     Args:
-        args (argparse.Namespace): The command line arguments.
+        args: The command line arguments.
     """
 
     # Open the guide. Note that we turn it into a Path, and just to be kind
