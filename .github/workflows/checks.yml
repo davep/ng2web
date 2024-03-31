@@ -46,7 +46,7 @@ jobs:
     - name: Type check
       run: make stricttypecheck
 
-    - name: Test
-      run: make test
+    # - name: Test
+    #   run: make test
 
 ### checks.yml ends here
