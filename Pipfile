@@ -16,6 +16,9 @@ typing-extensions = "*"
 sphinx-rtd-theme = "*"
 sphinx = "*"
 coverage = "*"
+pre-commit = "*"
+black = "*"
+build = "*"
 
 [requires]
 python_version = "3.8"
