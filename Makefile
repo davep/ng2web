@@ -1,33 +1,29 @@
 ###############################################################################
 # Common make values.
-library   := ng2web
-run       := pipenv run
-python    := $(run) python
-lint      := $(run) pylint
-pyreverse := $(run) pyreverse
-mypy      := $(run) mypy
-coverage  := $(run) coverage
-test      := $(coverage) run -m unittest discover -v -t $(shell pwd)
-twine     := $(run) twine
+app      := ng2web
+run      := pipenv run
+python   := $(run) python
+lint     := $(run) pylint
+coverage := $(run) coverage
+test     := $(coverage) run -m unittest discover -v -t $(shell pwd)
+mypy     := $(run) mypy
+twine    := $(run) twine
+build    := $(python) -m build
+black    := $(run) black
+mkdocs   := $(run) mkdocs
 
-###############################################################################
-# Get the OS so we can make some decisions about other things.
-UNAME := $(shell uname)
-
-###############################################################################
-# Set up the command to open a file; normally for viewing.
-ifeq ($(UNAME),Darwin)
-open_file := open
-endif
-ifeq ($(UNAME),Linux)
-open_file := xdg-open
-endif
+##############################################################################
+# Run the app.
+.PHONY: run
+run:
+	$(python) -m $(app)
 
 ##############################################################################
 # Setup/update packages the system requires.
 .PHONY: setup
 setup:				# Install all dependencies
 	pipenv sync --dev
+	$(run) pre-commit install
 
 .PHONY: resetup
 resetup:			# Recreate the virtual environment from scratch
@@ -50,7 +46,7 @@ depsshow:			# Show the dependency graph
 # Checking/testing/linting/etc.
 .PHONY: lint
 lint:				# Run Pylint over the library
-	$(lint) $(library) tests
+	$(lint) $(app)
 
 .PHONY: test
 test:				# Run unit tests
@@ -74,40 +70,37 @@ coveragetxt:			# Show a test-based code coverage report
 
 .PHONY: typecheck
 typecheck:			# Perform static type checks with mypy
-	$(mypy) --scripts-are-modules $(library) tests $(wildcard bin/[a-z]*)
+	$(mypy) --scripts-are-modules $(app)
 
 .PHONY: stricttypecheck
 stricttypecheck:	        # Perform a strict static type checks with mypy
-	$(mypy) --scripts-are-modules --strict $(library) tests $(wildcard bin/[a-z]*)
+	$(mypy) --scripts-are-modules --strict $(app)
 
 .PHONY: checkall
-checkall: dscheck lint stricttypecheck test coverage # Check all the things
+checkall: lint stricttypecheck test # Check all the things
 
 ##############################################################################
 # Documentation.
 .PHONY: docs
 docs:				# Generate the system documentation
-	cd docs; rm -rf source; rm -rf build; mkdir source build
-	cd docs/source; $(run) sphinx-apidoc -F -f -e -M -H $(library) -o . ../../$(library) ../../setup.py
-	cp docs/template/* docs/source
-	cd docs; $(run) make html
+	echo GNDN for now
 
 .PHONY: rtfm
-rtfm: docs			# Locally read the library documentation
-	$(open_file) docs/build/html/index.html
+rtfm:				# Locally read the library documentation
+	$(mkdocs) serve
 
 ##############################################################################
 # Package/publish.
 .PHONY: package
 package:			# Package the library
-	$(python) setup.py bdist_wheel
+	$(build) -w
 
 .PHONY: spackage
 spackage:			# Create a source package for the library
-	$(python) setup.py sdist
+	$(build) -s
 
 .PHONY: packagecheck
-packagecheck: package		# Check the packaging.
+packagecheck: package spackage		# Check the packaging.
 	$(twine) check dist/*
 
 .PHONY: testdist
@@ -120,13 +113,17 @@ dist: packagecheck		# Upload to pypi
 
 ##############################################################################
 # Utility.
+.PHONY: ugly
+ugly:				# Reformat the code with black.
+	$(black) $(app) tests
+
 .PHONY: repl
 repl:				# Start a Python REPL
 	$(python)
 
 .PHONY: clean
 clean:				# Clean the build directories
-	rm -rf build dist $(library).egg-info
+	rm -rf build dist $(app).egg-info
 
 .PHONY: help
 help:				# Display this help
