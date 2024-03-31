@@ -364,19 +364,19 @@ def to_html(args: argparse.Namespace) -> None:
         )
 
         # Set up the global variables for template expansion.
-        env.globals = dict(
-            generator=f"ng2web v{__version__} (ngdb v{ngdb_ver})",
-            guide=guide,
-            about_url=about(guide, args).name,
-            stylesheet=css(guide, args).name,
-        )
+        env.globals = {
+            "generator": f"ng2web v{__version__} (ngdb v{ngdb_ver})",
+            "guide": guide,
+            "about_url": about(guide, args).name,
+            "stylesheet": css(guide, args).name,
+        }
 
         # Set up the filters for the guide templates.
-        env.filters = dict(
-            urlify=lambda option: entry_file(guide, args, option.offset).name,
-            toHTML=lambda src: Markup(ToHTML(src)),
-            title=lambda entry: page_title(guide, entry),
-        )
+        env.filters = {
+            "urlify": lambda option: entry_file(guide, args, option.offset).name,
+            "toHTML": lambda src: Markup(ToHTML(src)),
+            "title": lambda entry: page_title(guide, entry),
+        }
 
         # Write the stylesheet.
         write_css(guide, args, env)
