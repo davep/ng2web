@@ -93,7 +93,7 @@ def get_args() -> argparse.Namespace:
     # Create the argument parser object.
     parser = argparse.ArgumentParser(
         prog=Path(__file__).stem,
-        description="Convert a Norton Guide database to HTML documents.",
+        description="Convert a Norton Guide database to HTML documents",
         epilog=version,
     )
 
@@ -101,7 +101,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument(
         "-o",
         "--output",
-        help="Directory where the output files will be created.",
+        help="Directory where the output files will be created",
         default=".",
     )
 
@@ -109,7 +109,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument(
         "-v",
         "--version",
-        help="Show version information.",
+        help="Show version information",
         action="version",
         version=f"%(prog)s {version}",
     )
