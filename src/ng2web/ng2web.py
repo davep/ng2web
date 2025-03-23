@@ -1,21 +1,28 @@
 """Core code."""
 
-##############################################################################
-# Python imports.
 from __future__ import annotations
-from pathlib import Path
-import argparse
 
 ##############################################################################
-# Third party imports.
-from ngdb import __version__ as ngdb_ver, NortonGuide, Entry, MarkupText, make_dos_like
+# Python imports.
+import argparse
+from pathlib import Path
+
+##############################################################################
+# Jinja2 imports.
 from jinja2 import (
-    __version__ as jinja_version,
     Environment,
     PackageLoader,
     select_autoescape,
 )
+from jinja2 import (
+    __version__ as jinja_version,
+)
 from markupsafe import Markup, escape
+
+##############################################################################
+# Third party imports.
+from ngdb import Entry, MarkupText, NortonGuide, make_dos_like
+from ngdb import __version__ as ngdb_ver
 
 ##############################################################################
 # Local imports.
@@ -132,7 +139,7 @@ def write_about(guide: NortonGuide, args: argparse.Namespace, env: Environment) 
         args: The command line arguments.
         env: The template environment.
     """
-    log(f"Writing about into {about( guide, args )}")
+    log(f"Writing about into {about(guide, args)}")
     with about(guide, args).open("w") as target:
         target.write(env.get_template("about.html").render())
 
@@ -160,7 +167,7 @@ def write_css(guide: NortonGuide, args: argparse.Namespace, env: Environment) ->
         args: The command line arguments.
         env: The template environment.
     """
-    log(f"Writing stylesheet into {css( guide, args )}")
+    log(f"Writing stylesheet into {css(guide, args)}")
     with css(guide, args).open("w") as target:
         target.write(
             env.get_template("base.css").render(
@@ -205,7 +212,7 @@ def entry_file(
     return output(
         args,
         prefix(
-            f"{ location if isinstance( location, int ) else location.offset }.html",
+            f"{location if isinstance(location, int) else location.offset}.html",
             guide,
         ),
     )
@@ -224,7 +231,7 @@ def write_entry(
         env: The template environment.
     """
     log(
-        f"Writing {entry.__class__.__name__.lower()} entry to {entry_file( guide, args, entry )}"
+        f"Writing {entry.__class__.__name__.lower()} entry to {entry_file(guide, args, entry)}"
     )
     with entry_file(guide, args, entry).open("w") as target:
         target.write(
@@ -288,7 +295,7 @@ class ToHTML(MarkupText):
         Args:
             colour: The colour value to handle.
         """
-        self.begin_markup(f"fg{ colour & 0xF} bg{ colour >> 4}")
+        self.begin_markup(f"fg{colour & 0xF} bg{colour >> 4}")
 
     def bold(self) -> None:
         """Handle being asked to go to bold mode."""
@@ -353,10 +360,9 @@ def to_html(args: argparse.Namespace) -> None:
     # Open the guide. Note that we turn it into a Path, and just to be kind
     # to folk, we attempt to expand any sort of ~ inside it first.
     with NortonGuide(Path(args.guide).expanduser().resolve()) as guide:
-
         # Log some basics.
         log(f"Guide: {guide.path}")
-        log(f"Output prefix: {prefix( '', guide )}")
+        log(f"Output prefix: {prefix('', guide)}")
 
         # Bootstrap the template stuff.
         env = Environment(

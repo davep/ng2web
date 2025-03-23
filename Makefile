@@ -1,129 +1,95 @@
-###############################################################################
-# Common make values.
-app      := ng2web
-run      := pipenv run
-python   := $(run) python
-lint     := $(run) pylint
-coverage := $(run) coverage
-test     := $(coverage) run -m unittest discover -v -t $(shell pwd)
-mypy     := $(run) mypy
-twine    := $(run) twine
-build    := $(python) -m build
-black    := $(run) black
-mkdocs   := $(run) mkdocs
+app    := ng2web
+src    := src/
+run    := rye run
+python := $(run) python
+lint   := rye lint -- --select I
+fmt    := rye fmt
+mypy   := $(run) mypy
 
 ##############################################################################
-# Run the app.
+# Local "interactive testing" of the code.
 .PHONY: run
-run:
-	$(python) -m $(app)
+run:				# Run the code in a testing context
+	$(run) $(app)
 
 ##############################################################################
 # Setup/update packages the system requires.
 .PHONY: setup
-setup:				# Install all dependencies
-	pipenv sync --dev
+setup:				# Set up the repository for development
+	rye sync
 	$(run) pre-commit install
 
+.PHONY: update
+update:				# Update all dependencies
+	rye sync --update-all
+
 .PHONY: resetup
-resetup:			# Recreate the virtual environment from scratch
-	rm -rf $(shell pipenv --venv)
-	pipenv sync --dev
-
-.PHONY: depsoutdated
-depsoutdated:			# Show a list of outdated dependencies
-	pipenv update --outdated
-
-.PHONY: depsupdate
-depsupdate:			# Update all dependencies
-	pipenv update --dev
-
-.PHONY: depsshow
-depsshow:			# Show the dependency graph
-	pipenv graph
+resetup: realclean		# Recreate the virtual environment from scratch
+	make setup
 
 ##############################################################################
 # Checking/testing/linting/etc.
 .PHONY: lint
-lint:				# Run Pylint over the library
-	$(lint) $(app)
+lint:				# Check the code for linting issues
+	$(lint) $(src)
 
-.PHONY: test
-test:				# Run unit tests
-	$(test) tests
-
-.PHONY: coverage
-coverage:			# Show the current code coverage
-	@$(coverage) report | awk '/^TOTAL/ { print "Coverage: " $$4 }'
-
-.PHONY: coveragehtml		# Create a HTML report of the current code coverage
-coveragehtml:
-	$(coverage) html
-
-.PHONY: coveragerep
-coveragerep: coveragehtml       # Create and view a report of the current code coverage
-	$(open_file) .coverage_report/index.html
-
-.PHONY: coveragetxt
-coveragetxt:			# Show a test-based code coverage report
-	$(coverage) report
+.PHONY: codestyle
+codestyle:			# Is the code formatted correctly?
+	$(fmt) --check $(src)
 
 .PHONY: typecheck
 typecheck:			# Perform static type checks with mypy
-	$(mypy) --scripts-are-modules $(app)
+	$(mypy) --scripts-are-modules $(src)
 
 .PHONY: stricttypecheck
 stricttypecheck:	        # Perform a strict static type checks with mypy
-	$(mypy) --scripts-are-modules --strict $(app)
+	$(mypy) --scripts-are-modules --strict $(src)
 
 .PHONY: checkall
-checkall: lint stricttypecheck test # Check all the things
-
-##############################################################################
-# Documentation.
-.PHONY: docs
-docs:				# Generate the system documentation
-	echo GNDN for now
-
-.PHONY: rtfm
-rtfm:				# Locally read the library documentation
-	$(mkdocs) serve
+checkall: codestyle lint stricttypecheck # Check all the things
 
 ##############################################################################
 # Package/publish.
 .PHONY: package
 package:			# Package the library
-	$(build) -w
+	rye build
 
 .PHONY: spackage
 spackage:			# Create a source package for the library
-	$(build) -s
-
-.PHONY: packagecheck
-packagecheck: package spackage		# Check the packaging.
-	$(twine) check dist/*
+	rye build --sdist
 
 .PHONY: testdist
-testdist: packagecheck		# Perform a test distribution
-	$(twine) upload --skip-existing --repository testpypi dist/*
+testdist: package			# Perform a test distribution
+	rye publish --yes --skip-existing --repository testpypi --repository-url https://test.pypi.org/legacy/
 
 .PHONY: dist
-dist: packagecheck		# Upload to pypi
-	$(twine) upload --skip-existing dist/*
+dist: package			# Upload to pypi
+	rye publish --yes --skip-existing
 
 ##############################################################################
 # Utility.
-.PHONY: ugly
-ugly:				# Reformat the code with black.
-	$(black) $(app) tests
-
 .PHONY: repl
-repl:				# Start a Python REPL
+repl:				# Start a Python REPL in the venv.
 	$(python)
+
+.PHONY: delint
+delint:			# Fix linting issues.
+	$(lint) --fix $(src)
+
+.PHONY: pep8ify
+pep8ify:			# Reformat the code to be as PEP8 as possible.
+	$(fmt) $(src)
+
+.PHONY: tidy
+tidy: delint pep8ify		# Tidy up the code, fixing lint and format issues.
 
 .PHONY: clean
 clean:				# Clean the build directories
-	rm -rf build dist $(app).egg-info
+	rm -rf dist
+
+.PHONY: realclean
+realclean: clean		# Clean the venv and build directories
+	rm -rf .venv
 
 .PHONY: help
 help:				# Display this help
