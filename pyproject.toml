@@ -12,7 +12,7 @@ dependencies = [
     "markupsafe>=3.0.2",
 ]
 readme = "README.md"
-requires-python = ">= 3.9"
+requires-python = ">= 3.10"
 license = { text = "GNU General Public License v3 or later (GPLv3+)" }
 keywords = [
     "library",
