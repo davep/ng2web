@@ -12,7 +12,10 @@ from pathlib import Path
 ##############################################################################
 # Jinja2 imports.
 from jinja2 import (
+    BaseLoader,
+    ChoiceLoader,
     Environment,
+    FileSystemLoader,
     PackageLoader,
     select_autoescape,
 )
@@ -86,6 +89,15 @@ def get_args() -> argparse.Namespace:
         type=Path,
         help="Directory where the output files will be created",
         default=".",
+    )
+
+    # Add an optional source of template files.
+    parser.add_argument(
+        "-t",
+        "--templates",
+        type=Path,
+        help="Directory of template overrides",
+        required=False,
     )
 
     # Add --version
@@ -337,6 +349,29 @@ def page_title(guide: NortonGuide, entry: Entry | None = None) -> str:
 
 
 ##############################################################################
+def make_loader(templates: Path | None) -> ChoiceLoader:
+    """Make the template loader.
+
+    Args:
+        templates: Optional directory for template overrides.
+
+    Returns:
+        Returns the template loader object.
+    """
+    loaders: list[BaseLoader] = []
+    if templates is not None:
+        if (templates := templates.expanduser().resolve()).is_dir():
+            log(f"Adding {templates} to the template path")
+            loaders.append(FileSystemLoader(str(templates), followlinks=True))
+        else:
+            log(f"Ignoring {templates} as a template location as it does not exist")
+    if (local_templates := Path("templates").resolve()).is_dir():
+        log(f"Adding {local_templates} to the template path")
+        loaders.append(FileSystemLoader(str(local_templates), followlinks=True))
+    return ChoiceLoader(loaders + [PackageLoader(Path(__file__).stem)])
+
+
+##############################################################################
 def to_html(args: argparse.Namespace) -> None:
     """Convert a Norton Guide into HTML.
 
@@ -372,7 +407,7 @@ def to_html(args: argparse.Namespace) -> None:
 
         # Bootstrap the template stuff.
         env = Environment(
-            loader=PackageLoader(Path(__file__).stem), autoescape=select_autoescape()
+            loader=make_loader(args.templates), autoescape=select_autoescape()
         )
 
         # Set up the global variables for template expansion.
