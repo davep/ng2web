@@ -12,7 +12,6 @@ from pathlib import Path
 ##############################################################################
 # Jinja2 imports.
 from jinja2 import (
-    BaseLoader,
     ChoiceLoader,
     Environment,
     FileSystemLoader,
@@ -358,7 +357,7 @@ def make_loader(templates: Path | None) -> ChoiceLoader:
     Returns:
         Returns the template loader object.
     """
-    loaders: list[BaseLoader] = []
+    loaders: list[FileSystemLoader] = []
     if templates is not None:
         if (templates := templates.expanduser().resolve()).is_dir():
             log(f"Adding {templates} to the template path")
