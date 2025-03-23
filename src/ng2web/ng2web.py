@@ -62,24 +62,6 @@ def prefix(text: str, guide: NortonGuide) -> str:
 
 
 ##############################################################################
-def output(args: argparse.Namespace, file_name: Path | str) -> Path:
-    """Expand a file's name so that it's within the output location.
-
-    Args:
-        args: The command line arguments.
-        file_name: The file's name.
-
-    Returns:
-        The full path to the file, within the output location.
-
-    Note:
-       This function will expand any user information within the specified
-       output path and also resolve the result.
-    """
-    return Path(args.output).expanduser().resolve() / Path(file_name)
-
-
-##############################################################################
 def get_args() -> argparse.Namespace:
     """Get the arguments passed by the user.
 
@@ -101,6 +83,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument(
         "-o",
         "--output",
+        type=Path,
         help="Directory where the output files will be created",
         default=".",
     )
@@ -115,65 +98,65 @@ def get_args() -> argparse.Namespace:
     )
 
     # The remainder is the path to the guides to look at.
-    parser.add_argument("guide", help="The guide to convert")
+    parser.add_argument("guide", help="The guide to convert", type=Path)
 
     # Parse the command line.
     return parser.parse_args()
 
 
 ##############################################################################
-def about(guide: NortonGuide, args: argparse.Namespace) -> Path:
+def about(guide: NortonGuide, output_directory: Path) -> Path:
     """Get the name of the about page for the guide.
 
     Args:
         guide: The guide to generate the about name for.
-        args: The command line arguments.
+        output_directory: The output directory.
 
     Returns:
         The path to the about file for the guide.
     """
-    return output(args, prefix("about.html", guide))
+    return output_directory / prefix("about.html", guide)
 
 
 ##############################################################################
-def write_about(guide: NortonGuide, args: argparse.Namespace, env: Environment) -> None:
+def write_about(guide: NortonGuide, output_directory: Path, env: Environment) -> None:
     """Write the about page for the guide.
 
     Args:
         guide: The guide to generate the about name for.
-        args: The command line arguments.
+        output_directory: The output directory.
         env: The template environment.
     """
-    log(f"Writing about into {about(guide, args)}")
-    with about(guide, args).open("w") as target:
+    log(f"Writing about into {about(guide, output_directory)}")
+    with about(guide, output_directory).open("w") as target:
         target.write(env.get_template("about.html").render())
 
 
 ##############################################################################
-def css(guide: NortonGuide, args: argparse.Namespace) -> Path:
+def css(guide: NortonGuide, output_directory: Path) -> Path:
     """Get the name of the stylesheet for the guide.
 
     Args:
         guide: The guide to generate the css name for.
-        args: The command line arguments.
+        output_directory: The output directory.
 
     Returns:
         The path to the stylesheet for the guide.
     """
-    return output(args, prefix("style.css", guide))
+    return output_directory / prefix("style.css", guide)
 
 
 ##############################################################################
-def write_css(guide: NortonGuide, args: argparse.Namespace, env: Environment) -> None:
+def write_css(guide: NortonGuide, output_directory: Path, env: Environment) -> None:
     """Write the stylesheet for the guide.
 
     Args:
         guide: The guide to generate the stylesheet for.
-        args: The command line arguments.
+        output_directory: The output directory.
         env: The template environment.
     """
-    log(f"Writing stylesheet into {css(guide, args)}")
-    with css(guide, args).open("w") as target:
+    log(f"Writing stylesheet into {css(guide, output_directory)}")
+    with css(guide, output_directory).open("w") as target:
         target.write(
             env.get_template("base.css").render(
                 colours=enumerate(
@@ -202,56 +185,55 @@ def write_css(guide: NortonGuide, args: argparse.Namespace, env: Environment) ->
 
 ##############################################################################
 def entry_file(
-    guide: NortonGuide, args: argparse.Namespace, location: int | Entry
+    guide: NortonGuide, output_directory: Path, location: int | Entry
 ) -> Path:
     """Get the name of an entry in the guide.
 
     Args:
         guid: The guide to generate the entry file name for.
-        args: The command line arguments.
+        output_directory: The output directory.
         location: The location of the entry.
 
     Returns:
         The path to the entry file name for the guide.
     """
-    return output(
-        args,
-        prefix(
-            f"{location if isinstance(location, int) else location.offset}.html",
-            guide,
-        ),
+    return output_directory / prefix(
+        f"{location if isinstance(location, int) else location.offset}.html",
+        guide,
     )
 
 
 ##############################################################################
 def write_entry(
-    entry: Entry, guide: NortonGuide, args: argparse.Namespace, env: Environment
+    entry: Entry, guide: NortonGuide, output_directory: Path, env: Environment
 ) -> None:
     """Write the an entry from the guide.
 
     Args:
         entry: The entry to write.
         guide: The guide the entry came from.
-        args: The command line arguments.
+        output_directory: The output directory.
         env: The template environment.
     """
     log(
-        f"Writing {entry.__class__.__name__.lower()} entry to {entry_file(guide, args, entry)}"
+        f"Writing {entry.__class__.__name__.lower()} entry to {entry_file(guide, output_directory, entry)}"
     )
-    with entry_file(guide, args, entry).open("w") as target:
+    with entry_file(guide, output_directory, entry).open("w") as target:
         target.write(
             env.get_template(f"{entry.__class__.__name__.lower()}.html").render(
                 entry=entry,
                 previous_url=(
-                    entry_file(guide, args, entry.previous).name
+                    entry_file(guide, output_directory, entry.previous).name
                     if entry.has_previous
                     else None
                 ),
                 next_url=(
-                    entry_file(guide, args, entry.next) if entry.has_next else None
+                    entry_file(guide, output_directory, entry.next)
+                    if entry.has_next
+                    else None
                 ),
                 up_url=(
-                    entry_file(guide, args, entry.parent.offset).name
+                    entry_file(guide, output_directory, entry.parent.offset).name
                     if entry.parent
                     else None
                 ),
@@ -362,11 +344,30 @@ def to_html(args: argparse.Namespace) -> None:
         args: The command line arguments.
     """
 
-    # Open the guide. Note that we turn it into a Path, and just to be kind
-    # to folk, we attempt to expand any sort of ~ inside it first.
-    with NortonGuide(Path(args.guide).expanduser().resolve()) as guide:
+    # Ensure the guide we're supposed to convert exists.
+    if not (convert_from := Path(args.guide).expanduser().resolve()).is_file():
+        log(f"No such file: {args.guide}")
+        exit(1)
+
+    # Ensure that the directory we're supposed to write to either doesn't
+    # exist yet, or does exist and is actually a directory.
+    if (
+        output_directory := Path(args.output).expanduser().resolve()
+    ).exists() and not output_directory.is_dir():
+        log(f"Not a directory: {args.output}")
+        exit(1)
+
+    # Ensure the output directory exists.
+    try:
+        output_directory.mkdir(parents=True, exist_ok=True)
+    except IOError as error:
+        log(f"{error}")
+        exit(1)
+
+    with NortonGuide(convert_from) as guide:
         # Log some basics.
         log(f"Guide: {guide.path}")
+        log(f"Output directory: {output_directory}")
         log(f"Output prefix: {prefix('', guide)}")
 
         # Bootstrap the template stuff.
@@ -378,26 +379,28 @@ def to_html(args: argparse.Namespace) -> None:
         env.globals = {
             "generator": f"ng2web v{__version__} (ngdb v{ngdb_ver})",
             "guide": guide,
-            "about_url": about(guide, args).name,
-            "stylesheet": css(guide, args).name,
+            "about_url": about(guide, output_directory).name,
+            "stylesheet": css(guide, output_directory).name,
         }
 
         # Set up the filters for the guide templates.
         env.filters = {
-            "urlify": lambda option: entry_file(guide, args, option.offset).name,
+            "urlify": lambda option: entry_file(
+                guide, output_directory, option.offset
+            ).name,
             "toHTML": lambda src: Markup(ToHTML(src)),
             "title": lambda entry: page_title(guide, entry),
         }
 
         # Write the stylesheet.
-        write_css(guide, args, env)
+        write_css(guide, output_directory, env)
 
         # Write the about page.
-        write_about(guide, args, env)
+        write_about(guide, output_directory, env)
 
         # Now, for every entry in the guide...
         for entry in guide:
-            write_entry(entry, guide, args, env)
+            write_entry(entry, guide, output_directory, env)
 
 
 ##############################################################################
