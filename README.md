@@ -1,26 +1,45 @@
 # ng2web - Norton Guide to HTML conversion tool
 
-Currently a work in progress to help test the work being done on
-[`ngdb.py`](https://github.com/davep/ngdb.py).
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/davep/ng2web/style-and-lint.yaml)](https://github.com/davep/ng2web/actions)
+[![GitHub commits since latest release](https://img.shields.io/github/commits-since/davep/ng2web/latest)](https://github.com/davep/ng2web/commits/main/)
+[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/davep/ng2web)](https://github.com/davep/ng2web/issues)
+[![GitHub Release Date](https://img.shields.io/github/release-date/davep/ng2web)](https://github.com/davep/ng2web/releases)
+[![PyPI - License](https://img.shields.io/pypi/l/ng2web)](https://github.com/davep/ng2web/blob/main/LICENSE)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ng2web)](https://github.com/davep/ng2web/blob/main/pyproject.toml)
+[![PyPI - Version](https://img.shields.io/pypi/v/ng2web)](https://pypi.org/project/ng2web/)
 
-## Quick and dirty introduction
+# Introduction
 
-Install with `pip` or a similar tool and then you'll have a `ng2web` command
-available. Given a Norton Guide database, just run the tool like this:
+[`ng2web`](https://github.com/davep/ng2web) is one in a [long line of Norton
+Guide tools I've written over the latest couple or so
+decades](https://www.davep.org/norton-guides/). It is, in effect, a
+replacement for [`w3ng`](https://github.com/davep/w3ng) and
+[`ng2html`](https://github.com/davep/ng2html).
+
+![ng2web](https://raw.githubusercontent.com/davep/ng2web/refs/heads/main/docs/images/default-output-look.png)
+
+## Installing
+
+### pipx
+
+The application can be installed using [`pipx`](https://pypa.github.io/pipx/):
 
 ```sh
-$ ng2web C52G01B.NG
+$ pipx install ng2web
 ```
 
-and you'll end up with lots of HTML files and a CSS file in your current
-directory. If you'd prefer to output elsewhere, use ```--output```:
+### Homebrew
+
+The package is available via Homebrew. Use the following commands to install:
 
 ```sh
-$ ng2web C52G01B.NG --output=web
+$ brew tap davep/homebrew
+$ brew install ng2web
 ```
 
-More comprehensive documentation is to come, plus more features and options
-(including documentation on how to override the default look/feel of the
-generated HTML.)
+## Using ng2web
+
+Please see [the usage guide](https://blog.davep.org/ng2web/) for details on
+how to use and configure the output of `ng2web.
 
 [//]: # (README.md ends here)
