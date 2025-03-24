@@ -15,7 +15,6 @@ markdown_extensions:
           format: !!python/name:markdown_exec.formatter
 
 plugins:
-  - search
   - markdown-exec
 
 theme:
