@@ -81,6 +81,14 @@ def get_args() -> argparse.Namespace:
         epilog=version,
     )
 
+    # Add an optional switch for making an index.html.
+    parser.add_argument(
+        "-i",
+        "--index",
+        action="store_true",
+        help="Generate the first entry in the guide as index.html",
+    )
+
     # Add an optional output directory.
     parser.add_argument(
         "-o",
@@ -196,7 +204,7 @@ def write_css(guide: NortonGuide, output_directory: Path, env: Environment) -> N
 
 ##############################################################################
 def entry_file(
-    guide: NortonGuide, output_directory: Path, location: int | Entry
+    guide: NortonGuide, output_directory: Path, location: int | Entry, make_index: bool
 ) -> Path:
     """Get the name of an entry in the guide.
 
@@ -204,19 +212,25 @@ def entry_file(
         guid: The guide to generate the entry file name for.
         output_directory: The output directory.
         location: The location of the entry.
+        make_index: Should we make the first entry `index.html`?
 
     Returns:
         The path to the entry file name for the guide.
     """
-    return output_directory / prefix(
-        f"{location if isinstance(location, int) else location.offset}.html",
-        guide,
-    )
+    if (
+        offset := location if isinstance(location, int) else location.offset
+    ) == guide.first_entry and make_index:
+        return output_directory / "index.html"
+    return output_directory / prefix(f"{offset}.html", guide)
 
 
 ##############################################################################
 def write_entry(
-    entry: Entry, guide: NortonGuide, output_directory: Path, env: Environment
+    entry: Entry,
+    guide: NortonGuide,
+    output_directory: Path,
+    make_index: bool,
+    env: Environment,
 ) -> None:
     """Write the an entry from the guide.
 
@@ -224,27 +238,30 @@ def write_entry(
         entry: The entry to write.
         guide: The guide the entry came from.
         output_directory: The output directory.
+        make_index: Make first entry be `index.html`?
         env: The template environment.
     """
     log(
-        f"Writing {entry.__class__.__name__.lower()} entry to {entry_file(guide, output_directory, entry)}"
+        f"Writing {entry.__class__.__name__.lower()} entry to {entry_file(guide, output_directory, entry, make_index)}"
     )
-    with entry_file(guide, output_directory, entry).open("w") as target:
+    with entry_file(guide, output_directory, entry, make_index).open("w") as target:
         target.write(
             env.get_template(f"{entry.__class__.__name__.lower()}.html").render(
                 entry=entry,
                 previous_url=(
-                    entry_file(guide, output_directory, entry.previous).name
+                    entry_file(guide, output_directory, entry.previous, make_index).name
                     if entry.has_previous
                     else None
                 ),
                 next_url=(
-                    entry_file(guide, output_directory, entry.next)
+                    entry_file(guide, output_directory, entry.next, make_index)
                     if entry.has_next
                     else None
                 ),
                 up_url=(
-                    entry_file(guide, output_directory, entry.parent.offset).name
+                    entry_file(
+                        guide, output_directory, entry.parent.offset, make_index
+                    ).name
                     if entry.parent
                     else None
                 ),
@@ -420,7 +437,7 @@ def to_html(args: argparse.Namespace) -> None:
         # Set up the filters for the guide templates.
         env.filters = {
             "urlify": lambda option: entry_file(
-                guide, output_directory, option.offset
+                guide, output_directory, option.offset, args.index
             ).name,
             "toHTML": lambda src: Markup(ToHTML(src)),
             "title": lambda entry: page_title(guide, entry),
@@ -434,7 +451,7 @@ def to_html(args: argparse.Namespace) -> None:
 
         # Now, for every entry in the guide...
         for entry in guide:
-            write_entry(entry, guide, output_directory, env)
+            write_entry(entry, guide, output_directory, args.index, env)
 
 
 ##############################################################################
