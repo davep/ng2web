@@ -43,7 +43,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/davep/ng2web"
+Homepage = "https://blog.davep.org/ng2web/"
 Repository = "https://github.com/davep/ng2web"
 Documentation = "https://blog.davep.org/ng2web/"
 Source = "https://github.com/davep/ng2web"
@@ -64,6 +64,8 @@ managed = true
 dev-dependencies = [
     "pre-commit>=4.2.0",
     "mypy>=1.15.0",
+    "mkdocs-material>=9.6.9",
+    "markdown-exec>=1.10.2",
 ]
 
 [tool.hatch.metadata]

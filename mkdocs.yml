@@ -1,0 +1,39 @@
+site_name: ng2web
+docs_dir: docs/
+repo_url: https://github.com/davep/ng2web
+
+nav:
+  - "Guide": index.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: bash
+          class: bash
+          validator: !!python/name:markdown_exec.validator
+          format: !!python/name:markdown_exec.formatter
+
+plugins:
+  - markdown-exec
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      accent: purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+### mkdocs.yml ends here
