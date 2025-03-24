@@ -43,7 +43,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/davep/ng2web"
+Homepage = "https://blog.davep.org/ng2web/"
 Repository = "https://github.com/davep/ng2web"
 Documentation = "https://blog.davep.org/ng2web/"
 Source = "https://github.com/davep/ng2web"
