@@ -1,8 +1,8 @@
 # ng2web ChangeLog
 
-## Unreleased
+## v1.0.0
 
-**Released: WiP**
+**Released: 2025-03-24**
 
 - Overhaul of the repository and the code.
   ([#2](https://github.com/davep/ng2web/pull/2))
