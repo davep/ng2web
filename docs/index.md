@@ -7,8 +7,9 @@ replacement for [`w3ng`](https://github.com/davep/w3ng) and
 [`ng2html`](https://github.com/davep/ng2html).
 
 As for what it does: it will take a [Norton Guide
-file](https://en.wikipedia.org/wiki/Norton_Guides) and turn the content into
-a collection of HTML pages, which you can then incorporate into a web site.
+file](https://en.wikipedia.org/wiki/Norton_Guides) and turns the content
+into a collection of HTML pages, which you can then incorporate into a web
+site.
 
 ## Command line options
 
@@ -24,6 +25,8 @@ giving output like this:
 ```bash exec="on" result="text"
 ng2web --help
 ```
+
+The key options are:
 
 ### `--index`
 
@@ -82,7 +85,8 @@ where the credits for the guide will be shown.
 
 ### The base entry template (`entry.html`)
 
-This is the template that both short and long entry templates build upon.
+This is the template that both [short](#the-short-entry-template-shorthtml)
+and [long](#the-long-entry-template-longhtml) entry templates build upon.
 
 ```jinja
 --8<-- "src/ng2web/templates/entry.html"
@@ -157,10 +161,9 @@ The default selection is:
 
 ### Custom template locations
 
-If you wish to override any of the above templates, a couple of methods are
-provided. By default, when a template is needed, `ng2web` will look in the
-following locations, in the following order; once a template is found that
-one is used.
+By default, when a template is needed, `ng2web` will look in the following
+locations, in the following order. Once a template is found that one is
+used.
 
 1. The directory provided with [the `--templates` switch](#-templates).
 2. `./templates/`, below the current working directory, if it exists.
@@ -170,11 +173,11 @@ one is used.
 
     You only need to make a copy of a template you actually want to change.
     Overriding one template doesn't mean you need to make a copy of all of
-    them.
+    them. Each tamplet is individually looked for using these rules.
 
 ## Global values
 
-The following variables are available in the templates:
+The following global variables are available in the templates:
 
 ### `generator`
 
@@ -234,13 +237,18 @@ Takes a guide entry and emits a suitable title for it. For example:
 {% block title %}{{ entry|title }}{% endblock %}
 ```
 
-The title will be rendered as part of sorts, which will include the title of
+The title will be rendered as path of sorts, which will include the title of
 the guide, the title of the menu the entry relates to, and the prompt from
 the menu that the entry relates to. For example:
 
 ```
 MrDebug for CA-Clipper Ver 1.20.147ß » Reference » Menus
 ```
+
+!!! tip
+
+    As a special case, if you pass `None` as the entry `title` will simply
+    output the title of the guide.
 
 ## Getting help
 
