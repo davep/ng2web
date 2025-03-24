@@ -64,6 +64,8 @@ managed = true
 dev-dependencies = [
     "pre-commit>=4.2.0",
     "mypy>=1.15.0",
+    "mkdocs-material>=9.6.9",
+    "markdown-exec>=1.10.2",
 ]
 
 [tool.hatch.metadata]
