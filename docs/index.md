@@ -11,6 +11,37 @@ file](https://en.wikipedia.org/wiki/Norton_Guides) and turns the content
 into a collection of HTML pages, which you can then incorporate into a web
 site.
 
+## Installing
+
+`ng2web` is a Python application and [is distributed via
+PyPI](https://pypi.org/project/ng2web/). It can be installed with tools such
+as [pipx](https://pipx.pypa.io/stable/):
+
+```sh
+pipx install ng2web
+```
+
+or [`uv`](https://docs.astral.sh/uv/):
+
+```sh
+uv tool install ng2web
+```
+
+Also, if you do have uv installed, you can simply use
+[`uvx`](https://docs.astral.sh/uv/guides/tools/):
+
+```sh
+uvx ng2web
+```
+
+to run `ng2web`.
+
+`ng2web` is also installable with Homebrew:
+
+```sh
+brew install davep/homebrew/ng2web
+```
+
 ## Command line options
 
 The command is called `ng2web` and all command line options can be found
