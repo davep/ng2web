@@ -23,6 +23,7 @@ theme:
   features:
     - content.code.copy
     - toc.integrate
+    - navigation.top
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
