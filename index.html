@@ -825,8 +825,9 @@ decades</a>. It is, in effect, a
 replacement for <a href="https://github.com/davep/w3ng"><code>w3ng</code></a> and
 <a href="https://github.com/davep/ng2html"><code>ng2html</code></a>.</p>
 <p>As for what it does: it will take a <a href="https://en.wikipedia.org/wiki/Norton_Guides">Norton Guide
-file</a> and turn the content into
-a collection of HTML pages, which you can then incorporate into a web site.</p>
+file</a> and turns the content
+into a collection of HTML pages, which you can then incorporate into a web
+site.</p>
 <h2 id="command-line-options">Command line options</h2>
 <p>The command is called <code>ng2web</code> and all command line options can be found
 with:</p>
@@ -850,6 +851,7 @@ options:
 
 v0.1.1 (ngdb v0.12.0; Jinja2 v3.1.6)
 </code></pre></div>
+<p>The key options are:</p>
 <h3 id="-index"><code>--index</code></h3>
 <p>By default <code>ng2web</code> generates all pages with names that are prefixed with
 the filename of the guide (minus the extension) and, for all pages relating
@@ -959,7 +961,8 @@ where the credits for the guide will be shown.</p>
 <span class="c">{# about.html ends here #}</span>
 </code></pre></div>
 <h3 id="the-base-entry-template-entryhtml">The base entry template (<code>entry.html</code>)</h3>
-<p>This is the template that both short and long entry templates build upon.</p>
+<p>This is the template that both <a href="#the-short-entry-template-shorthtml">short</a>
+and <a href="#the-long-entry-template-longhtml">long</a> entry templates build upon.</p>
 <div class="highlight"><pre><span></span><code><span class="c">{# -*- engine: jinja2 -*- #}</span>
 
 <span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;base.html&quot;</span> <span class="cp">%}</span>
@@ -1279,10 +1282,9 @@ match the colours common in text modes on PC/DOS systems.</p>
 </ol>
 <h2 id="overriding-templates">Overriding templates</h2>
 <h3 id="custom-template-locations">Custom template locations</h3>
-<p>If you wish to override any of the above templates, a couple of methods are
-provided. By default, when a template is needed, <code>ng2web</code> will look in the
-following locations, in the following order; once a template is found that
-one is used.</p>
+<p>By default, when a template is needed, <code>ng2web</code> will look in the following
+locations, in the following order. Once a template is found that one is
+used.</p>
 <ol>
 <li>The directory provided with <a href="#-templates">the <code>--templates</code> switch</a>.</li>
 <li><code>./templates/</code>, below the current working directory, if it exists.</li>
@@ -1292,10 +1294,10 @@ one is used.</p>
 <p class="admonition-title">Tip</p>
 <p>You only need to make a copy of a template you actually want to change.
 Overriding one template doesn't mean you need to make a copy of all of
-them.</p>
+them. Each tamplet is individually looked for using these rules.</p>
 </div>
 <h2 id="global-values">Global values</h2>
-<p>The following variables are available in the templates:</p>
+<p>The following global variables are available in the templates:</p>
 <h3 id="generator"><code>generator</code></h3>
 <p>The generator name for <code>ng2web</code>, this will include the version number of
 <code>ng2web</code> and of <code>ngdb</code> (<a href="https://github.com/davep/ngdb.py">the library that <code>ng2web</code> is built
@@ -1331,11 +1333,16 @@ be seen being used in the example given above.</p>
 <p>Takes a guide entry and emits a suitable title for it. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">{%</span> <span class="k">block</span> <span class="nv">title</span> <span class="cp">%}{{</span> <span class="nv">entry</span><span class="o">|</span><span class="nf">title</span> <span class="cp">}}{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
 </code></pre></div>
-<p>The title will be rendered as part of sorts, which will include the title of
+<p>The title will be rendered as path of sorts, which will include the title of
 the guide, the title of the menu the entry relates to, and the prompt from
 the menu that the entry relates to. For example:</p>
 <div class="highlight"><pre><span></span><code>MrDebug for CA-Clipper Ver 1.20.147ß » Reference » Menus
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>As a special case, if you pass <code>None</code> as the entry <code>title</code> will simply
+output the title of the guide.</p>
+</div>
 <h2 id="getting-help">Getting help</h2>
 <p>If you need some help using <code>ng2web</code>, or have ideas for improvements, please
 feel free to drop by <a href="https://github.com/davep/ng2web/discussions">the
