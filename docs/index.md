@@ -25,5 +25,26 @@ giving output like this:
 ng2web --help
 ```
 
+## `--index`
+
+By default `ng2web` generates all pages with names that are prefixed with
+the filename of the guide (minus the extension) and, for all pages relating
+to short and long entries, including the byte offset of the entry in the
+guide; this means that amongst the generated pages there's no obvious
+starting location.
+
+Add the `--index` switch to tell `ng2web` to always generate the first entry
+in the guide as the file `index.html`.
+
+## `--output`
+
+Use this switch to optionally specify the output directory for the generated
+HTML. By default all HTML files will be generated in the current directory.
+
+## `--templates`
+
+Use this switch to optionally specify a location to look for templates that
+will override the default templates (see later in this document for details
+on how to use templates to control the output of `ng2web`).
 
 [//]: # (index.md ends here)
