@@ -22,6 +22,7 @@ theme:
   name: material
   features:
     - content.code.copy
+    - toc.integrate
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
