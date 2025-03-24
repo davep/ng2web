@@ -6,7 +6,7 @@ authors = [
     { name = "Dave Pearson", email = "davep@davep.org" }
 ]
 dependencies = [
-    "ngdb>=0.11.0",
+    "ngdb>=0.12.0",
     "jinja2>=3.1.6",
     "typing-extensions>=4.12.2",
     "markupsafe>=3.0.2",
