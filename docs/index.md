@@ -90,6 +90,12 @@ Guide reader look.
 
 ![Default look of the output](images/default-output-look.png)
 
+The template engine used is
+[Jinja](https://jinja.palletsprojects.com/en/stable/). If you want to modify
+the templates, or create your own from scratch, the [Jinja template designer
+documentation](https://jinja.palletsprojects.com/en/stable/templates/) will
+be worth a read.
+
 There are a number of templates that control each of the major types of
 content inside a Norton Guide.
 
