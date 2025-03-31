@@ -210,7 +210,7 @@ used.
 
     You only need to make a copy of a template you actually want to change.
     Overriding one template doesn't mean you need to make a copy of all of
-    them. Each tamplet is individually looked for using these rules.
+    them. Each template is individually looked for using these rules.
 
 ## Global values
 
