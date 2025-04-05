@@ -44,9 +44,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://blog.davep.org/ng2web/"
+Homepage = "https://ng2web.davep.dev/"
 Repository = "https://github.com/davep/ng2web"
-Documentation = "https://blog.davep.org/ng2web/"
+Documentation = "https://ng2web.davep.dev/"
 Source = "https://github.com/davep/ng2web"
 Issues = "https://github.com/davep/ng2web/issues"
 Discussions = "https://github.com/davep/ng2web/discussions"
