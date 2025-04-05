@@ -39,7 +39,7 @@ $ brew install ng2web
 
 ## Using ng2web
 
-Please see [the usage guide](https://blog.davep.org/ng2web/) for details on
-how to use and configure the output of `ng2web`.
+Please see [the usage guide](https://ng2web.davep.dev/) for details on how
+to use and configure the output of `ng2web`.
 
 [//]: # (README.md ends here)
