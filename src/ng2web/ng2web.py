@@ -254,7 +254,7 @@ def write_entry(
                     else None
                 ),
                 next_url=(
-                    entry_file(guide, output_directory, entry.next, make_index)
+                    entry_file(guide, output_directory, entry.next, make_index).name
                     if entry.has_next
                     else None
                 ),
