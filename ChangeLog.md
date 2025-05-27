@@ -1,5 +1,13 @@
 # ng2web ChangeLog
 
+## v1.0.1
+
+**Released: 2025-05-27**
+
+- Fixed `next_url` being a full pathname rather than just the filename (with
+  thanks to [@bhmj](https://github.com/bhmj)).
+  ([#18](https://github.com/davep/ng2web/pull/18))
+
 ## v1.0.0
 
 **Released: 2025-03-24**
