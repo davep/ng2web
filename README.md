@@ -28,6 +28,14 @@ The application can be installed using [`pipx`](https://pypa.github.io/pipx/):
 $ pipx install ng2web
 ```
 
+### uv
+
+The package can be install using [`uv`](https://docs.astral.sh/uv/getting-started/installation/):
+
+```sh
+uv tool install ng2web
+```
+
 ### Homebrew
 
 The package is available via Homebrew. Use the following commands to install:
