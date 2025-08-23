@@ -7,6 +7,7 @@
 - Migrated from `rye` to `uv` for development management.
   ([#21](https://github.com/davep/ng2web/pull/21))
 - Added Python 3.14 as a tested/supported Python version.
+  ([#22](https://github.com/davep/ng2web/pull/22))
 
 ## v1.0.1
 
