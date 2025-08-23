@@ -5,6 +5,7 @@
 **Released: WiP**
 
 - Migrated from `rye` to `uv` for development management.
+  ([#21](https://github.com/davep/ng2web/pull/21))
 
 ## v1.0.1
 
