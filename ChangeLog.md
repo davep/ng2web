@@ -1,8 +1,8 @@
 # ng2web ChangeLog
 
-## Unreleased
+## v1.1.0
 
-**Released: WiP**
+**Released: 2025-10-06**
 
 - Migrated from `rye` to `uv` for development management.
   ([#21](https://github.com/davep/ng2web/pull/21))

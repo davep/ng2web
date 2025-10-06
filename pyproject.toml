@@ -1,6 +1,6 @@
 [project]
 name = "ng2web"
-version = "1.0.1"
+version = "1.1.0"
 description = "Norton Guide to HTML conversion tool"
 authors = [
     { name = "Dave Pearson", email = "davep@davep.org" }
