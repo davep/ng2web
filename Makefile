@@ -1,11 +1,16 @@
-app    := ng2web
-src    := src/
-run    := rye run
-python := $(run) python
-lint   := rye lint -- --select I
-fmt    := rye fmt
-mypy   := $(run) mypy
-mkdocs := $(run) mkdocs
+app     := ng2web
+src     := src/
+run     := uv run
+sync    := uv sync
+build   := uv build
+publish := uv publish --username=__token__ --keyring-provider=subprocess
+python  := $(run) python
+ruff    := $(run) ruff
+lint    := $(ruff) check --select I
+fmt     := $(ruff) format
+mypy    := $(run) mypy
+mkdocs  := $(run) mkdocs
+spell   := $(run) codespell
 
 ##############################################################################
 # Local "interactive testing" of the code.
@@ -17,12 +22,12 @@ run:				# Run the code in a testing context
 # Setup/update packages the system requires.
 .PHONY: setup
 setup:				# Set up the repository for development
-	rye sync
+	$(sync)
 	$(run) pre-commit install
 
 .PHONY: update
 update:				# Update all dependencies
-	rye sync --update-all
+	$(sync) --upgrade
 
 .PHONY: resetup
 resetup: realclean		# Recreate the virtual environment from scratch
@@ -32,22 +37,26 @@ resetup: realclean		# Recreate the virtual environment from scratch
 # Checking/testing/linting/etc.
 .PHONY: lint
 lint:				# Check the code for linting issues
-	$(lint) $(src)
+	$(lint) $(src) $(tests)
 
 .PHONY: codestyle
 codestyle:			# Is the code formatted correctly?
-	$(fmt) --check $(src)
+	$(fmt) --check $(src) $(tests)
 
 .PHONY: typecheck
 typecheck:			# Perform static type checks with mypy
-	$(mypy) --scripts-are-modules $(src)
+	$(mypy) --scripts-are-modules $(src) $(tests)
 
 .PHONY: stricttypecheck
 stricttypecheck:	        # Perform a strict static type checks with mypy
-	$(mypy) --scripts-are-modules --strict $(src)
+	$(mypy) --scripts-are-modules --strict $(src) $(tests)
+
+.PHONY: spellcheck
+spellcheck:			# Spell check the code
+	$(spell) *.md $(src) $(docs) $(tests)
 
 .PHONY: checkall
-checkall: codestyle lint stricttypecheck # Check all the things
+checkall: spellcheck codestyle lint stricttypecheck # Check all the things
 
 ##############################################################################
 # Documentation.
@@ -66,41 +75,48 @@ publishdocs:			# Set up the docs for publishing
 ##############################################################################
 # Package/publish.
 .PHONY: package
-package:			# Package the library
-	rye build
+package: clean-packaging		# Package the library
+	$(build)
 
 .PHONY: spackage
 spackage:			# Create a source package for the library
-	rye build --sdist
+	$(build) --sdist
 
 .PHONY: testdist
 testdist: package			# Perform a test distribution
-	rye publish --yes --skip-existing --repository testpypi --repository-url https://test.pypi.org/legacy/
+	$(publish) --index testpypi
 
 .PHONY: dist
 dist: package			# Upload to pypi
-	rye publish --yes --skip-existing
+	$(publish)
 
 ##############################################################################
 # Utility.
 .PHONY: repl
-repl:				# Start a Python REPL in the venv.
+repl:				# Start a Python REPL in the venv
 	$(python)
 
 .PHONY: delint
-delint:			# Fix linting issues.
-	$(lint) --fix $(src)
+delint:			# Fix linting issues
+	$(lint) --fix  $(src) $(tests)
 
 .PHONY: pep8ify
-pep8ify:			# Reformat the code to be as PEP8 as possible.
-	$(fmt) $(src)
+pep8ify:			# Reformat the code to be as PEP8 as possible
+	$(fmt) $(src) $(tests)
 
 .PHONY: tidy
-tidy: delint pep8ify		# Tidy up the code, fixing lint and format issues.
+tidy: delint pep8ify		# Tidy up the code, fixing lint and format issues
+
+.PHONY: clean-packaging
+clean-packaging:		# Clean the package building files
+	rm -rf dist
+
+.PHONY: clean-docs
+clean-docs:			# Clean up the documentation building files
+	rm -rf site
 
 .PHONY: clean
-clean:				# Clean the build directories
-	rm -rf dist
+clean: clean-packaging clean-docs # Clean the build directories
 
 .PHONY: realclean
 realclean: clean		# Clean the venv and build directories

@@ -1,5 +1,12 @@
 # ng2web ChangeLog
 
+## Unreleased
+
+**Released: WiP**
+
+- Switched to `uv` for package management.
+- Fixed a typo in `base.html`.
+
 ## v1.0.1
 
 **Released: 2025-05-27**
