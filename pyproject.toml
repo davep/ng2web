@@ -13,7 +13,7 @@ dependencies = [
 ]
 readme = "README.md"
 requires-python = ">= 3.10"
-license = { text = "GNU General Public License v3 or later (GPLv3+)" }
+license = "GPL-3.0-or-later"
 keywords = [
     "library",
     "dbase",
@@ -29,8 +29,9 @@ classifiers = [
     "Environment :: Console",
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -61,13 +62,21 @@ build-backend = "uv_build"
 
 [tool.uv]
 managed = true
-dev-dependencies = [
+
+[dependency-groups]
+dev = [
     "pre-commit>=4.2.0",
     "mypy>=1.15.0",
     "mkdocs-material>=9.6.9",
     "markdown-exec>=1.10.2",
     "ruff>=0.12.9",
 ]
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
 
 [tool.pyright]
 venvPath="."
