@@ -10,6 +10,7 @@ lint    := $(ruff) check --select I
 fmt     := $(ruff) format
 mypy    := $(run) mypy
 mkdocs  := $(run) mkdocs
+spell   := $(run) codespell
 
 ##############################################################################
 # Local "interactive testing" of the code.
@@ -50,8 +51,12 @@ typecheck:			# Perform static type checks with mypy
 stricttypecheck:	        # Perform a strict static type checks with mypy
 	$(mypy) --scripts-are-modules --strict $(src)
 
+.PHONY: spellcheck
+spellcheck:			# Spell check the code
+	$(spell) *.md $(src) $(docs) $(tests)
+
 .PHONY: checkall
-checkall: codestyle lint stricttypecheck # Check all the things
+checkall: spellcheck codestyle lint stricttypecheck # Check all the things
 
 ##############################################################################
 # Documentation.

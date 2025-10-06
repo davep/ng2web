@@ -70,6 +70,7 @@ dev = [
     "mkdocs-material>=9.6.9",
     "markdown-exec>=1.10.2",
     "ruff>=0.12.9",
+    "codespell>=2.4.1",
 ]
 
 [[tool.uv.index]]
