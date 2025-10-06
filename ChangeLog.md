@@ -8,6 +8,7 @@
   ([#21](https://github.com/davep/ng2web/pull/21))
 - Added Python 3.14 as a tested/supported Python version.
   ([#22](https://github.com/davep/ng2web/pull/22))
+- Fixed a typo in the header metadata of the base template.
 
 ## v1.0.1
 
