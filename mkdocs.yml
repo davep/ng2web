@@ -3,7 +3,8 @@ docs_dir: docs/
 repo_url: https://github.com/davep/ng2web
 
 nav:
-  - "Guide": index.md
+  - Guide: index.md
+  - Change Log: changelog.md
 
 markdown_extensions:
   - admonition
@@ -23,9 +24,11 @@ theme:
   icon:
     logo: fontawesome/solid/code
   features:
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.tabs.sticky
+    - navigation.footer
     - content.code.copy
-    - toc.integrate
-    - navigation.top
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
