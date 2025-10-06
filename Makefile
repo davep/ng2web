@@ -88,7 +88,7 @@ testdist: package			# Perform a test distribution
 
 .PHONY: dist
 dist: package			# Upload to pypi
-	$(publish) --index testpypi
+	$(publish)
 
 ##############################################################################
 # Utility.
