@@ -8,7 +8,13 @@
       <ul>
         <li>See Also:</li>
         {% for see_also in entry.see_also %}
-          <li><a href="{{ see_also|urlify }}">{{ see_also.text }}</a></li>
+          <li>
+            {% if see_also.has_offset %}
+              <a href="{{ see_also|urlify }}">{{ see_also.text }}</a>
+            {% else %}
+              {{ see_also.text }}
+            {% endif %}
+          </li>
         {% endfor %}
       </ul>
     </nav>
