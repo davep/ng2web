@@ -6,6 +6,8 @@
 
 - Added `generation_time` as a global variable available to templates.
   ([#36](https://github.com/davep/ng2web/pull/36))
+- Fixed cosmetic glitch in top level navigation on small/mobile devices.
+  ([#37](https://github.com/davep/ng2web/pull/37))
 
 ## v1.1.0
 
