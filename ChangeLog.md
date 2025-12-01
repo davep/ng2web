@@ -10,6 +10,8 @@
   ([#37](https://github.com/davep/ng2web/pull/37))
 - Added better handling of see-also items that have broken offsets.
   ([#38](https://github.com/davep/ng2web/pull/38))
+- Added better handling of guides with no menus.
+  ([#39](https://github.com/davep/ng2web/pull/39))
 
 ## v1.1.0
 
