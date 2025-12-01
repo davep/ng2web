@@ -7,7 +7,30 @@ footer {
   clear: both;
   font-size: 70%;
   color: silver;
-  padding: 1ex;
+}
+
+footer dl {
+  display: inline-grid;
+  padding-left: 1em;
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+}
+
+footer dt, footer dd {
+  margin: 0;
+}
+
+footer dt::after {
+  content: ":";
+  margin-right: 1ex;
+}
+
+footer dd {
+  margin-right: 1ex;
+}
+
+footer dd:not(:last-child)::after {
+  content: ","
 }
 
 .box {
