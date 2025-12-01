@@ -483,6 +483,24 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#about_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      about_url
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generation_time" class="md-nav__link">
+    <span class="md-ellipsis">
+      generation_time
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#generator" class="md-nav__link">
     <span class="md-ellipsis">
       generator
@@ -495,15 +513,6 @@
   <a href="#guide" class="md-nav__link">
     <span class="md-ellipsis">
       guide
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#about_url" class="md-nav__link">
-    <span class="md-ellipsis">
-      about_url
     </span>
   </a>
   
@@ -801,6 +810,24 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#about_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      about_url
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generation_time" class="md-nav__link">
+    <span class="md-ellipsis">
+      generation_time
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#generator" class="md-nav__link">
     <span class="md-ellipsis">
       generator
@@ -813,15 +840,6 @@
   <a href="#guide" class="md-nav__link">
     <span class="md-ellipsis">
       guide
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#about_url" class="md-nav__link">
-    <span class="md-ellipsis">
-      about_url
     </span>
   </a>
   
@@ -961,7 +979,7 @@ options:
                         Directory of template overrides
   -v, --version         Show version information
 
-v1.1.0 (ngdb v1.1.0; Jinja2 v3.1.6)
+v1.2.0 (ngdb v1.1.0; Jinja2 v3.1.6)
 </code></pre></div>
 <p>The key options are:</p>
 <h3 id="-index"><code>--index</code></h3>
@@ -1027,24 +1045,37 @@ type of page.</p>
 
 <span class="x">    &lt;section&gt;</span>
 
-<span class="x">      &lt;nav class=&quot;menu box&quot;&gt;</span>
-<span class="x">        &lt;ul&gt;</span>
-<span class="x">          </span><span class="cp">{%</span>- <span class="k">for</span> <span class="nv">menu</span> <span class="k">in</span> <span class="nv">guide.menus</span> <span class="cp">%}</span>
-<span class="x">            &lt;li&gt;</span><span class="cp">{{</span> <span class="nv">menu</span> <span class="cp">}}</span><span class="x">&lt;/li&gt;</span>
-<span class="x">            &lt;ul&gt;</span>
-<span class="x">              </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">option</span> <span class="k">in</span> <span class="nv">menu</span> -<span class="cp">%}</span>
-<span class="x">                &lt;li&gt;&lt;a href=&quot;</span><span class="cp">{{</span> <span class="nv">option</span><span class="o">|</span><span class="nf">urlify</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span><span class="cp">{{</span> <span class="nv">option.text</span> <span class="cp">}}</span><span class="x">&lt;/a&gt;&lt;/li&gt;</span>
-<span class="x">              </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
-<span class="x">            &lt;/ul&gt;</span>
-<span class="x">          </span><span class="cp">{%</span>- <span class="k">endfor</span> <span class="cp">%}</span>
-<span class="x">        &lt;/ul&gt;</span>
-<span class="x">      &lt;/nav&gt;</span>
+<span class="x">      </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">guide.menus</span> <span class="cp">%}</span>
+<span class="x">        &lt;nav class=&quot;menu box&quot;&gt;</span>
+<span class="x">          &lt;ul&gt;</span>
+<span class="x">            </span><span class="cp">{%</span>- <span class="k">for</span> <span class="nv">menu</span> <span class="k">in</span> <span class="nv">guide.menus</span> <span class="cp">%}</span>
+<span class="x">              &lt;li&gt;</span><span class="cp">{{</span> <span class="nv">menu</span> <span class="cp">}}</span><span class="x">&lt;/li&gt;</span>
+<span class="x">              &lt;ul&gt;</span>
+<span class="x">                </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">option</span> <span class="k">in</span> <span class="nv">menu</span> -<span class="cp">%}</span>
+<span class="x">                  &lt;li&gt;&lt;a href=&quot;</span><span class="cp">{{</span> <span class="nv">option</span><span class="o">|</span><span class="nf">urlify</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span><span class="cp">{{</span> <span class="nv">option.text</span> <span class="cp">}}</span><span class="x">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="x">                </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="x">              &lt;/ul&gt;</span>
+<span class="x">            </span><span class="cp">{%</span>- <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="x">          &lt;/ul&gt;</span>
+<span class="x">        &lt;/nav&gt;</span>
+<span class="x">      </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
 
 <span class="x">      &lt;article class=&quot;box&quot;&gt;</span>
 <span class="x">        </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
 <span class="x">      &lt;/article&gt;</span>
 
 <span class="x">    &lt;/section&gt;</span>
+
+<span class="x">    </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">advert</span> <span class="cp">%}</span>
+<span class="x">      &lt;footer&gt;</span>
+<span class="x">        &lt;nav class=&quot;box&quot;&gt;</span>
+<span class="x">          &lt;dl&gt;</span>
+<span class="x">            &lt;dt&gt;Generated&lt;/dt&gt;&lt;dd&gt;</span><span class="cp">{{</span> <span class="nv">generation_time.strftime</span><span class="o">(</span><span class="s2">&quot;%Y-%m-%d %H:%M:%S&quot;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&lt;/dd&gt;</span>
+<span class="x">            &lt;dt&gt;Generator&lt;/dt&gt;&lt;dd&gt;&lt;a href=&quot;https://ng2web.davep.dev&quot;&gt;</span><span class="cp">{{</span> <span class="nv">generator</span> <span class="cp">}}</span><span class="x">&lt;/a&gt;&lt;/dd&gt;</span>
+<span class="x">          &lt;/dl&gt;</span>
+<span class="x">        &lt;/nav&gt;</span>
+<span class="x">      &lt;/footer&gt;</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
 
 <span class="x">  &lt;/body&gt;</span>
 
@@ -1130,7 +1161,13 @@ not links that go elsewhere.</p>
 <span class="x">      &lt;ul&gt;</span>
 <span class="x">        &lt;li&gt;See Also:&lt;/li&gt;</span>
 <span class="x">        </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">see_also</span> <span class="k">in</span> <span class="nv">entry.see_also</span> <span class="cp">%}</span>
-<span class="x">          &lt;li&gt;&lt;a href=&quot;</span><span class="cp">{{</span> <span class="nv">see_also</span><span class="o">|</span><span class="nf">urlify</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span><span class="cp">{{</span> <span class="nv">see_also.text</span> <span class="cp">}}</span><span class="x">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="x">          &lt;li&gt;</span>
+<span class="x">            </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">see_also.has_offset</span> <span class="cp">%}</span>
+<span class="x">              &lt;a href=&quot;</span><span class="cp">{{</span> <span class="nv">see_also</span><span class="o">|</span><span class="nf">urlify</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span><span class="cp">{{</span> <span class="nv">see_also.text</span> <span class="cp">}}</span><span class="x">&lt;/a&gt;</span>
+<span class="x">            </span><span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span>
+<span class="x">              </span><span class="cp">{{</span> <span class="nv">see_also.text</span> <span class="cp">}}</span>
+<span class="x">            </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="x">          &lt;/li&gt;</span>
 <span class="x">        </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
 <span class="x">      &lt;/ul&gt;</span>
 <span class="x">    &lt;/nav&gt;</span>
@@ -1167,7 +1204,30 @@ links.</p>
 <span class="w">  </span><span class="k">clear</span><span class="p">:</span><span class="w"> </span><span class="kc">both</span><span class="p">;</span>
 <span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">70</span><span class="kt">%</span><span class="p">;</span>
 <span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">silver</span><span class="p">;</span>
-<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">ex</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">footer</span><span class="w"> </span><span class="nt">dl</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline</span><span class="o">-</span><span class="k">grid</span><span class="p">;</span>
+<span class="w">  </span><span class="k">padding-left</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">  </span><span class="k">grid-auto-flow</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
+<span class="w">  </span><span class="k">grid-auto-columns</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">footer</span><span class="w"> </span><span class="nt">dt</span><span class="o">,</span><span class="w"> </span><span class="nt">footer</span><span class="w"> </span><span class="nt">dd</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">footer</span><span class="w"> </span><span class="nt">dt</span><span class="p">::</span><span class="nd">after</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">content</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;:&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">margin-right</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">ex</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">footer</span><span class="w"> </span><span class="nt">dd</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">margin-right</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">ex</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">footer</span><span class="w"> </span><span class="nt">dd</span><span class="p">:</span><span class="nd">not</span><span class="o">(</span><span class="p">:</span><span class="nd">last-child</span><span class="o">)</span><span class="p">::</span><span class="nd">after</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">content</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;,&quot;</span>
 <span class="p">}</span>
 
 <span class="p">.</span><span class="nc">box</span><span class="w"> </span><span class="p">{</span>
@@ -1337,19 +1397,13 @@ links.</p>
 <span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="nt">header</span><span class="w"> </span><span class="nt">nav</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">padding-left</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="kt">em</span><span class="p">;</span>
-<span class="w">    </span><span class="k">padding-right</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="kt">em</span><span class="p">;</span>
-<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline</span><span class="p">;</span>
+<span class="w">  </span><span class="nt">header</span><span class="w"> </span><span class="nt">nav</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="k">grid</span><span class="p">;</span>
+<span class="w">    </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="nt">header</span><span class="w"> </span><span class="nt">nav</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="nt">li</span><span class="p">::</span><span class="nd">after</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">content</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="nt">header</span><span class="w"> </span><span class="nt">nav</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="nt">li</span><span class="p">:</span><span class="nd">nth-child</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span><span class="p">:</span><span class="nd">after</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">content</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;\\A&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="k">white-space</span><span class="p">:</span><span class="w"> </span><span class="kc">pre</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
@@ -1415,6 +1469,10 @@ them. Each template is individually looked for using these rules.</p>
 </div>
 <h2 id="global-values">Global values</h2>
 <p>The following global variables are available in the templates:</p>
+<h3 id="about_url"><code>about_url</code></h3>
+<p>The URL for the about page that will be generated.</p>
+<h3 id="generation_time"><code>generation_time</code></h3>
+<p>A date/time that is the time at which the output generation is taking place.</p>
 <h3 id="generator"><code>generator</code></h3>
 <p>The generator name for <code>ng2web</code>, this will include the version number of
 <code>ng2web</code> and of <code>ngdb</code> (<a href="https://github.com/davep/ngdb.py">the library that <code>ng2web</code> is built
@@ -1432,8 +1490,6 @@ file. This allows access to <a href="https://blog.davep.org/ngdb.py/library-cont
 anything that may change the state of the underlying guide object could
 cause unexpected results.</p>
 </div>
-<h3 id="about_url"><code>about_url</code></h3>
-<p>The URL for the about page that will be generated.</p>
 <h3 id="stylesheet"><code>stylesheet</code></h3>
 <p>The name of the stylesheet that will be generated.</p>
 <h2 id="available-filters">Available filters</h2>
