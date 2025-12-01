@@ -7,6 +7,7 @@ from __future__ import annotations
 ##############################################################################
 # Python imports.
 import argparse
+from datetime import datetime
 from pathlib import Path
 
 ##############################################################################
@@ -432,6 +433,7 @@ def to_html(args: argparse.Namespace) -> None:
             "guide": guide,
             "about_url": about(guide, output_directory).name,
             "stylesheet": css(guide, output_directory).name,
+            "generation_time": datetime.now(),
         }
 
         # Set up the filters for the guide templates.

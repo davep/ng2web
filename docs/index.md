@@ -216,6 +216,14 @@ used.
 
 The following global variables are available in the templates:
 
+### `about_url`
+
+The URL for the about page that will be generated.
+
+### `generation_time`
+
+A date/time that is the time at which the output generation is taking place.
+
 ### `generator`
 
 The generator name for `ng2web`, this will include the version number of
@@ -239,10 +247,6 @@ file. This allows access to [any of the properties and methods of
     It's best to restrict use of this to read-only properties; calling
     anything that may change the state of the underlying guide object could
     cause unexpected results.
-
-### `about_url`
-
-The URL for the about page that will be generated.
 
 ### `stylesheet`
 
