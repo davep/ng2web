@@ -8,6 +8,8 @@
   ([#36](https://github.com/davep/ng2web/pull/36))
 - Fixed cosmetic glitch in top level navigation on small/mobile devices.
   ([#37](https://github.com/davep/ng2web/pull/37))
+- Added better handling of see-also items that have broken offsets.
+  ([#38](https://github.com/davep/ng2web/pull/38))
 
 ## v1.1.0
 
