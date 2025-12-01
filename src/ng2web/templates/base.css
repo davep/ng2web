@@ -177,19 +177,13 @@ span.fg{{ i }} {
     padding: 0;
   }
 
-  header nav ul li {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    display: inline;
+  header nav ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
   header nav ul li::after {
     content: "";
-  }
-
-  header nav ul li:nth-child(2):after {
-    content: "\\A";
-    white-space: pre;
   }
 
   section nav.menu li {
