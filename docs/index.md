@@ -248,6 +248,10 @@ The URL for the about page that will be generated.
 
 The name of the stylesheet that will be generated.
 
+### `generation_time`
+
+A date/time that is the time at which the output generation is taking place.
+
 ## Available filters
 
 The following filters are made available in the templates:
