@@ -51,6 +51,17 @@
 
     </section>
 
+    {% block advert %}
+      <footer>
+        <nav class="box">
+          <dl>
+            <dt>Generated</dt><dd>{{ generation_time.strftime("%Y-%m-%d %H:%M:%S") }}</dd>
+            <dt>Generator</dt><dd><a href="https://ng2web.davep.dev">{{ generator }}</a></dd>
+          </dl>
+        </nav>
+      </footer>
+    {% endblock %}
+
   </body>
 
 </html>
