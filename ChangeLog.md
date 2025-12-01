@@ -1,5 +1,11 @@
 # ng2web ChangeLog
 
+## Unreleased
+
+**Released: WiP**
+
+- Added `generation_time` as a global variable available to templates.
+
 ## v1.1.0
 
 **Released: 2025-10-06**
