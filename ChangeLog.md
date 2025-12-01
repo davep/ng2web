@@ -12,6 +12,8 @@
   ([#38](https://github.com/davep/ng2web/pull/38))
 - Added better handling of guides with no menus.
   ([#39](https://github.com/davep/ng2web/pull/39))
+- Added a footer to each page to say when the page was generated and what
+  was used to generate it ([#40](https://github.com/davep/ng2web/pull/40)).
 
 ## v1.1.0
 
