@@ -9,7 +9,7 @@
   {% block lines %}
     <pre class="entry">
       {%- for line in entry -%}
-        {%- if line is string -%}
+        {%- if line is string or not line.has_offset -%}
           <span class="line">{{ line|toHTML }}</span>
         {%- else -%}
           <a class="line" href="{{ line|urlify }}">{{ line.text|toHTML }}</a>
