@@ -1,8 +1,8 @@
 # ng2web ChangeLog
 
-## Unreleased
+## v1.3.0
 
-**Released: WiP**
+**Released: 2025-12-03**
 
 - Added better handling of links within entries that have no actual offset.
   ([#43](https://github.com/davep/ng2web/pull/43))
