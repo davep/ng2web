@@ -99,6 +99,14 @@ def get_args() -> argparse.Namespace:
         default=".",
     )
 
+    # Add a quiet flag
+    parser.add_argument(
+        "-q",
+        "--quiet",
+        action="store_true",
+        help="Write less progress output while working",
+    )
+
     # Add an optional source of template files.
     parser.add_argument(
         "-t",
@@ -139,15 +147,19 @@ def about(guide: NortonGuide, output_directory: Path) -> Path:
 
 
 ##############################################################################
-def write_about(guide: NortonGuide, output_directory: Path, env: Environment) -> None:
+def write_about(
+    guide: NortonGuide, output_directory: Path, env: Environment, quietly: bool
+) -> None:
     """Write the about page for the guide.
 
     Args:
         guide: The guide to generate the about name for.
         output_directory: The output directory.
         env: The template environment.
+        quietly: Don't log the output.
     """
-    log(f"Writing about into {about(guide, output_directory)}")
+    if not quietly:
+        log(f"Writing about into {about(guide, output_directory)}")
     with about(guide, output_directory).open("w") as target:
         target.write(env.get_template("about.html").render())
 
@@ -167,15 +179,19 @@ def css(guide: NortonGuide, output_directory: Path) -> Path:
 
 
 ##############################################################################
-def write_css(guide: NortonGuide, output_directory: Path, env: Environment) -> None:
+def write_css(
+    guide: NortonGuide, output_directory: Path, env: Environment, quietly: bool
+) -> None:
     """Write the stylesheet for the guide.
 
     Args:
         guide: The guide to generate the stylesheet for.
         output_directory: The output directory.
         env: The template environment.
+        quietly: Don't log the output.
     """
-    log(f"Writing stylesheet into {css(guide, output_directory)}")
+    if not quietly:
+        log(f"Writing stylesheet into {css(guide, output_directory)}")
     with css(guide, output_directory).open("w") as target:
         target.write(
             env.get_template("base.css").render(
@@ -232,6 +248,7 @@ def write_entry(
     output_directory: Path,
     make_index: bool,
     env: Environment,
+    quietly: bool,
 ) -> None:
     """Write the an entry from the guide.
 
@@ -241,10 +258,12 @@ def write_entry(
         output_directory: The output directory.
         make_index: Make first entry be `index.html`?
         env: The template environment.
+        quietly: Write without logging?
     """
-    log(
-        f"Writing {entry.__class__.__name__.lower()} entry to {entry_file(guide, output_directory, entry, make_index)}"
-    )
+    if not quietly:
+        log(
+            f"Writing {entry.__class__.__name__.lower()} entry to {entry_file(guide, output_directory, entry, make_index)}"
+        )
     with entry_file(guide, output_directory, entry, make_index).open("w") as target:
         target.write(
             env.get_template(f"{entry.__class__.__name__.lower()}.html").render(
@@ -418,9 +437,10 @@ def to_html(args: argparse.Namespace) -> None:
 
     with NortonGuide(convert_from) as guide:
         # Log some basics.
-        log(f"Guide: {guide.path}")
-        log(f"Output directory: {output_directory}")
-        log(f"Output prefix: {prefix('', guide)}")
+        if not args.quiet:
+            log(f"Guide: {guide.path}")
+            log(f"Output directory: {output_directory}")
+            log(f"Output prefix: {prefix('', guide)}")
 
         # Bootstrap the template stuff.
         env = Environment(
@@ -446,14 +466,14 @@ def to_html(args: argparse.Namespace) -> None:
         }
 
         # Write the stylesheet.
-        write_css(guide, output_directory, env)
+        write_css(guide, output_directory, env, args.quiet)
 
         # Write the about page.
-        write_about(guide, output_directory, env)
+        write_about(guide, output_directory, env, args.quiet)
 
         # Now, for every entry in the guide...
         for entry in guide:
-            write_entry(entry, guide, output_directory, args.index, env)
+            write_entry(entry, guide, output_directory, args.index, env, args.quiet)
 
 
 ##############################################################################
