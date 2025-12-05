@@ -357,6 +357,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#-quiet" class="md-nav__link">
+    <span class="md-ellipsis">
+      --quiet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#-templates" class="md-nav__link">
     <span class="md-ellipsis">
       --templates
@@ -684,6 +693,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#-quiet" class="md-nav__link">
+    <span class="md-ellipsis">
+      --quiet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#-templates" class="md-nav__link">
     <span class="md-ellipsis">
       --templates
@@ -964,7 +982,7 @@ with:</p>
 <div class="highlight"><pre><span></span><code>ng2web<span class="w"> </span>--help
 </code></pre></div>
 <p>giving output like this:</p>
-<div class="highlight"><pre><span></span><code>usage: ng2web [-h] [-i] [-o OUTPUT] [-t TEMPLATES] [-v] guide
+<div class="highlight"><pre><span></span><code>usage: ng2web [-h] [-i] [-o OUTPUT] [-q] [-t TEMPLATES] [-v] guide
 
 Convert a Norton Guide database to HTML documents
 
@@ -975,11 +993,12 @@ options:
   -h, --help            show this help message and exit
   -i, --index           Generate the first entry in the guide as index.html
   -o, --output OUTPUT   Directory where the output files will be created
+  -q, --quiet           Write less progress output while working
   -t, --templates TEMPLATES
                         Directory of template overrides
   -v, --version         Show version information
 
-v1.2.0 (ngdb v1.1.0; Jinja2 v3.1.6)
+v1.4.0 (ngdb v1.1.0; Jinja2 v3.1.6)
 </code></pre></div>
 <p>The key options are:</p>
 <h3 id="-index"><code>--index</code></h3>
@@ -993,6 +1012,8 @@ in the guide as the file <code>index.html</code>.</p>
 <h3 id="-output"><code>--output</code></h3>
 <p>Use this switch to optionally specify the output directory for the generated
 HTML. By default all HTML files will be generated in the current directory.</p>
+<h3 id="-quiet"><code>--quiet</code></h3>
+<p>Silence the conversion progress output.</p>
 <h3 id="-templates"><code>--templates</code></h3>
 <p>Use this switch to optionally specify a location to look for templates that
 will override the default templates (see <a href="#templates">the next section</a> in
@@ -1122,7 +1143,7 @@ and <a href="#the-long-entry-template-longhtml">long</a> entry templates build u
 <span class="x">  </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">lines</span> <span class="cp">%}</span>
 <span class="x">    &lt;pre class=&quot;entry&quot;&gt;</span>
 <span class="x">      </span><span class="cp">{%</span>- <span class="k">for</span> <span class="nv">line</span> <span class="k">in</span> <span class="nv">entry</span> -<span class="cp">%}</span>
-<span class="x">        </span><span class="cp">{%</span>- <span class="k">if</span> <span class="nv">line</span> <span class="k">is</span> <span class="nf">string</span> -<span class="cp">%}</span>
+<span class="x">        </span><span class="cp">{%</span>- <span class="k">if</span> <span class="nv">line</span> <span class="k">is</span> <span class="nf">string</span> <span class="k">or</span> <span class="k">not</span> <span class="nv">line.has_offset</span> -<span class="cp">%}</span>
 <span class="x">          &lt;span class=&quot;line&quot;&gt;</span><span class="cp">{{</span> <span class="nv">line</span><span class="o">|</span><span class="nf">toHTML</span> <span class="cp">}}</span><span class="x">&lt;/span&gt;</span>
 <span class="x">        </span><span class="cp">{%</span>- <span class="k">else</span> -<span class="cp">%}</span>
 <span class="x">          &lt;a class=&quot;line&quot; href=&quot;</span><span class="cp">{{</span> <span class="nv">line</span><span class="o">|</span><span class="nf">urlify</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span><span class="cp">{{</span> <span class="nv">line.text</span><span class="o">|</span><span class="nf">toHTML</span> <span class="cp">}}</span><span class="x">&lt;/a&gt;</span>
