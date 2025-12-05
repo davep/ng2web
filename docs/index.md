@@ -75,6 +75,10 @@ in the guide as the file `index.html`.
 Use this switch to optionally specify the output directory for the generated
 HTML. By default all HTML files will be generated in the current directory.
 
+### `--quiet`
+
+Silence the conversion progress output.
+
 ### `--templates`
 
 Use this switch to optionally specify a location to look for templates that
