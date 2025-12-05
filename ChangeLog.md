@@ -1,10 +1,11 @@
 # ng2web ChangeLog
 
-## Unreleased
+## v1.4.0
 
-**Released: WiP**
+**Released: 2025-12-05**
 
 - Added the `--quiet` switch.
+  ([#46](https://github.com/davep/ng2web/pull/46))
 
 ## v1.3.0
 
