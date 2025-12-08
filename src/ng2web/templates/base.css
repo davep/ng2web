@@ -128,39 +128,39 @@ nav.seeAlso ul li {
   margin-right: 1em;
 }
 
-#body article {
+#entry {
   overflow: scroll;
   font-family: 'Roboto Mono', monospace;
   padding: 0.5em;
   margin-bottom: 1ex;
 }
 
-#body article pre {
+#entry pre {
   font-family: inherit;
   margin: 0;
   padding: 0;
 }
 
-#body article h1 {
+#entry h1 {
   color: white;
   margin-bottom: 0;
 }
 
-#body article ul {
+#entry ul {
   list-style: none;
   padding-left: 1ex;
   white-space: normal;
 }
 
-#body article span.ngb {
+#entry span.ngb {
   color: white;
 }
 
-#body article span.ngu {
+#entry span.ngu {
   color: fuchsia;
 }
 
-#body article a {
+#entry a {
   width: 100%;
   display: inline-block;
 }
@@ -186,7 +186,7 @@ span.fg{{ i }} {
     margin: 0;
   }
 
-  #body article {
+  #entry {
     clear: both;
   }
 
@@ -223,7 +223,7 @@ span.fg{{ i }} {
     color: white;
   }
 
-  #body article {
+  #entry {
     font-size: 80%;
   }
 }
