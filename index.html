@@ -998,7 +998,7 @@ options:
                         Directory of template overrides
   -v, --version         Show version information
 
-v1.4.0 (ngdb v1.1.0; Jinja2 v3.1.6)
+v1.5.0 (ngdb v1.1.0; Jinja2 v3.1.6)
 </code></pre></div>
 <p>The key options are:</p>
 <h3 id="-index"><code>--index</code></h3>
@@ -1037,7 +1037,7 @@ type of page.</p>
 <div class="highlight"><pre><span></span><code><span class="c">{# -*- engine: jinja2 -*- #}</span>
 
 <span class="x">&lt;!DOCTYPE html&gt;</span>
-<span class="x">&lt;html&gt;</span>
+<span class="x">&lt;html lang=&quot;en&quot;&gt;</span>
 
 <span class="x">  &lt;head&gt;</span>
 <span class="x">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span>
@@ -1064,28 +1064,30 @@ type of page.</p>
 <span class="x">      &lt;/nav&gt;</span>
 <span class="x">    &lt;/header&gt;</span>
 
-<span class="x">    &lt;section&gt;</span>
+<span class="x">    &lt;div id=&quot;body&quot;&gt;</span>
 
 <span class="x">      </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">guide.menus</span> <span class="cp">%}</span>
 <span class="x">        &lt;nav class=&quot;menu box&quot;&gt;</span>
 <span class="x">          &lt;ul&gt;</span>
 <span class="x">            </span><span class="cp">{%</span>- <span class="k">for</span> <span class="nv">menu</span> <span class="k">in</span> <span class="nv">guide.menus</span> <span class="cp">%}</span>
 <span class="x">              &lt;li&gt;</span><span class="cp">{{</span> <span class="nv">menu</span> <span class="cp">}}</span><span class="x">&lt;/li&gt;</span>
-<span class="x">              &lt;ul&gt;</span>
-<span class="x">                </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">option</span> <span class="k">in</span> <span class="nv">menu</span> -<span class="cp">%}</span>
-<span class="x">                  &lt;li&gt;&lt;a href=&quot;</span><span class="cp">{{</span> <span class="nv">option</span><span class="o">|</span><span class="nf">urlify</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span><span class="cp">{{</span> <span class="nv">option.text</span> <span class="cp">}}</span><span class="x">&lt;/a&gt;&lt;/li&gt;</span>
-<span class="x">                </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
-<span class="x">              &lt;/ul&gt;</span>
+<span class="x">              &lt;li&gt;</span>
+<span class="x">                &lt;ul&gt;</span>
+<span class="x">                  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">option</span> <span class="k">in</span> <span class="nv">menu</span> -<span class="cp">%}</span>
+<span class="x">                    &lt;li&gt;&lt;a href=&quot;</span><span class="cp">{{</span> <span class="nv">option</span><span class="o">|</span><span class="nf">urlify</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span><span class="cp">{{</span> <span class="nv">option.text</span> <span class="cp">}}</span><span class="x">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="x">                  </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="x">                &lt;/ul&gt;</span>
+<span class="x">              &lt;/li&gt;</span>
 <span class="x">            </span><span class="cp">{%</span>- <span class="k">endfor</span> <span class="cp">%}</span>
 <span class="x">          &lt;/ul&gt;</span>
 <span class="x">        &lt;/nav&gt;</span>
 <span class="x">      </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
 
-<span class="x">      &lt;article class=&quot;box&quot;&gt;</span>
+<span class="x">      &lt;div id=&quot;entry&quot; class=&quot;box&quot;&gt;</span>
 <span class="x">        </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
-<span class="x">      &lt;/article&gt;</span>
+<span class="x">      &lt;/div&gt;</span>
 
-<span class="x">    &lt;/section&gt;</span>
+<span class="x">    &lt;/div&gt;</span>
 
 <span class="x">    </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">advert</span> <span class="cp">%}</span>
 <span class="x">      &lt;footer&gt;</span>
@@ -1118,7 +1120,7 @@ where the credits for the guide will be shown.</p>
 <span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}</span>
 
 <span class="x">  &lt;h1&gt;About </span><span class="cp">{{</span> <span class="kp">None</span><span class="o">|</span><span class="nf">title</span> <span class="cp">}}</span><span class="x">&lt;/h1&gt;</span>
-<span class="x">  &lt;hr /&gt;</span>
+<span class="x">  &lt;hr&gt;</span>
 <span class="x">  &lt;pre&gt;</span>
 <span class="x">    </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">line</span> <span class="k">in</span> <span class="nv">guide.credits</span> <span class="cp">%}</span>
 <span class="x">      </span><span class="cp">{{</span> <span class="nv">line</span><span class="o">|</span><span class="nf">toHTML</span> <span class="cp">}}</span>
@@ -1148,7 +1150,7 @@ and <a href="#the-long-entry-template-longhtml">long</a> entry templates build u
 <span class="x">        </span><span class="cp">{%</span>- <span class="k">else</span> -<span class="cp">%}</span>
 <span class="x">          &lt;a class=&quot;line&quot; href=&quot;</span><span class="cp">{{</span> <span class="nv">line</span><span class="o">|</span><span class="nf">urlify</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span><span class="cp">{{</span> <span class="nv">line.text</span><span class="o">|</span><span class="nf">toHTML</span> <span class="cp">}}</span><span class="x">&lt;/a&gt;</span>
 <span class="x">        </span><span class="cp">{%</span>- <span class="k">endif</span> -<span class="cp">%}</span>
-<span class="x">        &lt;br /&gt;</span>
+<span class="x">        &lt;br&gt;</span>
 <span class="x">    </span><span class="cp">{%</span>- <span class="k">endfor</span> -<span class="cp">%}</span>
 <span class="x">    &lt;/pre&gt;</span>
 <span class="x">  </span><span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
@@ -1300,27 +1302,27 @@ links.</p>
 <span class="w">  </span><span class="k">padding-right</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">em</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">body</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">float</span><span class="p">:</span><span class="w"> </span><span class="kc">left</span><span class="p">;</span>
 <span class="w">  </span><span class="k">padding-right</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">ex</span><span class="p">;</span>
 <span class="w">  </span><span class="k">margin-right</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">ex</span><span class="p">;</span>
 <span class="w">  </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">ex</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">body</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">list-style</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
 <span class="w">  </span><span class="k">padding-left</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">ex</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">body</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">body</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">silver</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">body</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">block</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -1346,39 +1348,39 @@ links.</p>
 <span class="w">  </span><span class="k">margin-right</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">em</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">article</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">entry</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">scroll</span><span class="p">;</span>
 <span class="w">  </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Roboto Mono&#39;</span><span class="p">,</span><span class="w"> </span><span class="kc">monospace</span><span class="p">;</span>
 <span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="kt">em</span><span class="p">;</span>
 <span class="w">  </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">ex</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">article</span><span class="w"> </span><span class="nt">pre</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">entry</span><span class="w"> </span><span class="nt">pre</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="kc">inherit</span><span class="p">;</span>
 <span class="w">  </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">article</span><span class="w"> </span><span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">entry</span><span class="w"> </span><span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
 <span class="w">  </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">article</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">entry</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">list-style</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
 <span class="w">  </span><span class="k">padding-left</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">ex</span><span class="p">;</span>
 <span class="w">  </span><span class="k">white-space</span><span class="p">:</span><span class="w"> </span><span class="kc">normal</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">article</span><span class="w"> </span><span class="nt">span</span><span class="p">.</span><span class="nc">ngb</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">entry</span><span class="w"> </span><span class="nt">span</span><span class="p">.</span><span class="nc">ngb</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">article</span><span class="w"> </span><span class="nt">span</span><span class="p">.</span><span class="nc">ngu</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">entry</span><span class="w"> </span><span class="nt">span</span><span class="p">.</span><span class="nc">ngu</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">fuchsia</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nt">section</span><span class="w"> </span><span class="nt">article</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span>
+<span class="p">#</span><span class="nn">entry</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
 <span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline-block</span><span class="p">;</span>
 <span class="p">}</span>
@@ -1399,12 +1401,12 @@ links.</p>
 <span class="w">    </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">#</span><span class="nn">body</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">float</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
 <span class="w">    </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="nt">section</span><span class="w"> </span><span class="nt">article</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">#</span><span class="nn">entry</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">clear</span><span class="p">:</span><span class="w"> </span><span class="kc">both</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
@@ -1427,21 +1429,21 @@ links.</p>
 <span class="w">    </span><span class="k">content</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">#</span><span class="nn">body</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline-block</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">#</span><span class="nn">body</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline-block</span><span class="p">;</span>
 <span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="kt">%</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="nt">section</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="nt">li</span><span class="p">::</span><span class="nd">after</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">#</span><span class="nn">body</span><span class="w"> </span><span class="nt">nav</span><span class="p">.</span><span class="nc">menu</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="nt">li</span><span class="p">::</span><span class="nd">after</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">content</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; |&quot;</span><span class="p">;</span>
 <span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="nt">section</span><span class="w"> </span><span class="nt">article</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">#</span><span class="nn">entry</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="kt">%</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
