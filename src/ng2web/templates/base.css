@@ -82,27 +82,27 @@ header nav span {
   padding-right: 1em;
 }
 
-section nav.menu {
+#body nav.menu {
   float: left;
   padding-right: 1ex;
   margin-right: 1ex;
   margin-bottom: 1ex;
 }
 
-section nav.menu ul {
+#body nav.menu ul {
   list-style: none;
   padding-left: 1ex;
 }
 
-section nav.menu > ul > li {
+#body nav.menu > ul > li {
   color: white;
 }
 
-section nav.menu > ul > li > ul > li {
+#body nav.menu > ul > li > ul > li {
   color: silver;
 }
 
-section nav.menu a {
+#body nav.menu a {
   display: block;
 }
 
@@ -128,39 +128,39 @@ nav.seeAlso ul li {
   margin-right: 1em;
 }
 
-section article {
+#body article {
   overflow: scroll;
   font-family: 'Roboto Mono', monospace;
   padding: 0.5em;
   margin-bottom: 1ex;
 }
 
-section article pre {
+#body article pre {
   font-family: inherit;
   margin: 0;
   padding: 0;
 }
 
-section article h1 {
+#body article h1 {
   color: white;
   margin-bottom: 0;
 }
 
-section article ul {
+#body article ul {
   list-style: none;
   padding-left: 1ex;
   white-space: normal;
 }
 
-section article span.ngb {
+#body article span.ngb {
   color: white;
 }
 
-section article span.ngu {
+#body article span.ngu {
   color: fuchsia;
 }
 
-section article a {
+#body article a {
   width: 100%;
   display: inline-block;
 }
@@ -181,12 +181,12 @@ span.fg{{ i }} {
     box-shadow: none;
   }
 
-  section nav.menu {
+  #body nav.menu {
     float: none;
     margin: 0;
   }
 
-  section article {
+  #body article {
     clear: both;
   }
 
@@ -209,21 +209,21 @@ span.fg{{ i }} {
     content: "";
   }
 
-  section nav.menu li {
+  #body nav.menu li {
     display: inline-block;
   }
 
-  section nav.menu a {
+  #body nav.menu a {
     display: inline-block;
     font-size: 80%;
   }
 
-  section nav.menu ul ul li::after {
+  #body nav.menu ul ul li::after {
     content: " |";
     color: white;
   }
 
-  section article {
+  #body article {
     font-size: 80%;
   }
 }
