@@ -45,7 +45,7 @@ a {
   color: inherit;
 }
 
-nav a:hover, nav a:hover *, article a:hover, article a:hover * {
+nav a:hover, nav a:hover *, #entry a:hover, #entry a:hover * {
   background: red;
   color: white;
 }

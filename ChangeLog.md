@@ -1,5 +1,12 @@
 # ng2web ChangeLog
 
+## Unreleased
+
+**Released: WiP**
+
+- Fixed broken bounce-bar effect.
+  ([#51](https://github.com/davep/ng2web/pull/51))
+
 ## v1.5.0
 
 **Released: 2025-12-08**
