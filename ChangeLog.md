@@ -5,7 +5,8 @@
 **Released: WiP**
 
 - Cleaned up all HTML validity warnings.
-  ([#48](https://github.com/davep/ng2web/pull/48))
+  ([#48](https://github.com/davep/ng2web/pull/48),
+  [#49](https://github.com/davep/ng2web/pull/49))
 
 ## v1.4.0
 
