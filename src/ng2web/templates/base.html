@@ -35,11 +35,13 @@
           <ul>
             {%- for menu in guide.menus %}
               <li>{{ menu }}</li>
-              <ul>
-                {% for option in menu -%}
-                  <li><a href="{{ option|urlify }}">{{ option.text }}</a></li>
-                {% endfor %}
-              </ul>
+              <li>
+                <ul>
+                  {% for option in menu -%}
+                    <li><a href="{{ option|urlify }}">{{ option.text }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
             {%- endfor %}
           </ul>
         </nav>
