@@ -1,5 +1,12 @@
 # ng2web ChangeLog
 
+## Unreleased
+
+**Released: WiP**
+
+- Cleaned up all HTML validity warnings.
+  ([#48](https://github.com/davep/ng2web/pull/48))
+
 ## v1.4.0
 
 **Released: 2025-12-05**

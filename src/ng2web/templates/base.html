@@ -1,7 +1,7 @@
 {# -*- engine: jinja2 -*- #}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,28 +28,30 @@
       </nav>
     </header>
 
-    <section>
+    <div id="body">
 
       {% if guide.menus %}
         <nav class="menu box">
           <ul>
             {%- for menu in guide.menus %}
               <li>{{ menu }}</li>
-              <ul>
-                {% for option in menu -%}
-                  <li><a href="{{ option|urlify }}">{{ option.text }}</a></li>
-                {% endfor %}
-              </ul>
+              <li>
+                <ul>
+                  {% for option in menu -%}
+                    <li><a href="{{ option|urlify }}">{{ option.text }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
             {%- endfor %}
           </ul>
         </nav>
       {% endif %}
 
-      <article class="box">
+      <div id="entry" class="box">
         {% block content %}{% endblock %}
-      </article>
+      </div>
 
-    </section>
+    </div>
 
     {% block advert %}
       <footer>
