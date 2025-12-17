@@ -1,5 +1,12 @@
 # ng2web ChangeLog
 
+## Unreleased
+
+**Released: WiP**
+
+- Don't print template locations when using custom templates, when quiet
+  mode is requested.
+
 ## v1.5.1
 
 **Released: 2025-12-08**
