@@ -385,11 +385,12 @@ def page_title(guide: NortonGuide, entry: Entry | None = None) -> str:
 
 
 ##############################################################################
-def make_loader(templates: Path | None) -> ChoiceLoader:
+def make_loader(templates: Path | None, quietly: bool) -> ChoiceLoader:
     """Make the template loader.
 
     Args:
         templates: Optional directory for template overrides.
+        quietly: Make without logging?
 
     Returns:
         Returns the template loader object.
@@ -397,12 +398,14 @@ def make_loader(templates: Path | None) -> ChoiceLoader:
     loaders: list[FileSystemLoader] = []
     if templates is not None:
         if (templates := templates.expanduser().resolve()).is_dir():
-            log(f"Adding {templates} to the template path")
+            if not quietly:
+                log(f"Adding {templates} to the template path")
             loaders.append(FileSystemLoader(str(templates), followlinks=True))
         else:
             log(f"Ignoring {templates} as a template location as it does not exist")
     if (local_templates := Path("templates").resolve()).is_dir():
-        log(f"Adding {local_templates} to the template path")
+        if not quietly:
+            log(f"Adding {local_templates} to the template path")
         loaders.append(FileSystemLoader(str(local_templates), followlinks=True))
     return ChoiceLoader(loaders + [PackageLoader(Path(__file__).stem)])
 
@@ -444,7 +447,8 @@ def to_html(args: argparse.Namespace) -> None:
 
         # Bootstrap the template stuff.
         env = Environment(
-            loader=make_loader(args.templates), autoescape=select_autoescape()
+            loader=make_loader(args.templates, args.quiet),
+            autoescape=select_autoescape(),
         )
 
         # Set up the global variables for template expansion.
