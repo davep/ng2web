@@ -434,7 +434,7 @@ def to_html(args: argparse.Namespace) -> None:
     # Ensure the output directory exists.
     try:
         output_directory.mkdir(parents=True, exist_ok=True)
-    except IOError as error:
+    except OSError as error:
         log(f"{error}")
         exit(1)
 
