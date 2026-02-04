@@ -262,7 +262,8 @@ def write_entry(
     """
     if not quietly:
         log(
-            f"Writing {entry.__class__.__name__.lower()} entry to {entry_file(guide, output_directory, entry, make_index)}"
+            f"Writing {entry.__class__.__name__.lower()} entry "
+            f"to {entry_file(guide, output_directory, entry, make_index)}"
         )
     with entry_file(guide, output_directory, entry, make_index).open("w") as target:
         target.write(
